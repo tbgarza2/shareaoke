@@ -1,6 +1,8 @@
 const { Router } = require('express');
-const db = require('./db');
+const { userRouter } = require('./user');
 
 const apiRouter = Router();
+
+apiRouter.use('/user', userRouter);
 
 module.exports.apiRouter = apiRouter;
