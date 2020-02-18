@@ -16,6 +16,9 @@ class App extends React.Component {
     return (
       <div>
         <h1>shareaoke</h1>
+        <a href="http://localhost:8888">
+          <button>Login with Spotify</button>
+        </a>
       </div>
     );
   }
