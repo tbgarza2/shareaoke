@@ -1,10 +1,14 @@
 import React from 'react';
-// import axios from 'axios';
+import Main from './Main.jsx';
+import SignUpLogin from './SignUpLogin.jsx';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      user: '',
+      friends: [],
+      playlist: [],
     };
   }
 
@@ -13,9 +17,11 @@ class App extends React.Component {
   }
 
   render() {
+    const { user, friends, playlist } = this.state;
     return (
       <div>
-        <h1>shareaoke</h1>
+        <h1>Shareaoke</h1>
+        { user === '' ? <SignUpLogin /> : <Main playlist={playlist} friends={friends} /> }
       </div>
     );
   }
