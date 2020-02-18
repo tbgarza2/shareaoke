@@ -8,7 +8,7 @@ class App extends React.Component {
     this.state = {
       user: '',
       friends: [],
-      playlist: [],
+      playlists: [],
     };
   }
 
@@ -17,11 +17,11 @@ class App extends React.Component {
   }
 
   render() {
-    const { user, friends, playlist } = this.state;
+    const { user, friends, playlists } = this.state;
     return (
       <div>
         <h1>Shareaoke</h1>
-        { user === '' ? <SignUpLogin /> : <Main playlist={playlist} friends={friends} /> }
+        { user === '' ? <SignUpLogin /> : <Main playlists={playlists} friends={friends} /> }
       </div>
     );
   }
