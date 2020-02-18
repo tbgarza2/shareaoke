@@ -3,7 +3,7 @@ const mysql = require('mysql');
 const DB_HOST = 'localhost';
 const DB_USER = 'root';
 const DB_PASS = '';
-const DB_NAME = 'mvp';
+const DB_NAME = 'shareaoke';
 
 const connection = mysql.createConnection({
   host: DB_HOST,
@@ -13,7 +13,7 @@ const connection = mysql.createConnection({
 });
 
 connection.connect(err => {
-  if(err){
+  if (err) {
     console.log(err);
   } else {
     console.log('Database connected!');
