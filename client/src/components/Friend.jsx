@@ -11,7 +11,7 @@ class Friend extends React.Component {
     const { friend } = this.props;
     return (
       <div>
-        <li>{friend}</li>
+        <li><div onClick={this.handleClick}>{friend}</div></li>
       </div>
     );
   }
