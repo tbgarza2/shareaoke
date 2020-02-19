@@ -6,9 +6,9 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      user: '',
-      friends: [],
-      playlists: [],
+      user: 'tdog',
+      friends: ['bubba', 'bull', 'will', 'chris', 'nas'],
+      playlists: ['Awesome Beats', 'Classical', 'Birthday Party', 'Royal Wedding'],
     };
   }
 
