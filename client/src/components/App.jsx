@@ -22,6 +22,10 @@ class App extends React.Component {
       <div>
         <h1>Shareaoke</h1>
         { user === '' ? <SignUpLogin /> : <Main playlists={playlists} friends={friends} /> }
+        <h1>shareaoke</h1>
+        <a href="http://localhost:8888">
+          <button>Login with Spotify</button>
+        </a>
       </div>
     );
   }

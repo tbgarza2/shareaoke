@@ -10,7 +10,7 @@ USE shareaoke;
 
 CREATE TABLE `user` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
-  `username` varchar(30)
+  `username` varchar(30) unique
 );
 
 CREATE TABLE `friend` (
@@ -46,6 +46,6 @@ ALTER TABLE `friend` ADD FOREIGN KEY (`id_friend`) REFERENCES `user` (`id`);
 
 ALTER TABLE `playlist` ADD FOREIGN KEY (`id_user`) REFERENCES `user` (`id`);
 
-ALTER TABLE `party` ADD FOREIGN KEY (`id_playlist`) REFERENCES `playlist` (`id`);
+ALTER TABLE `playlist_song` ADD FOREIGN KEY (`id_playlist`) REFERENCES `playlist` (`id`);
 
-ALTER TABLE `party` ADD FOREIGN KEY (`id_song`) REFERENCES `song` (`id`);
+ALTER TABLE `playlist_song` ADD FOREIGN KEY (`id_song`) REFERENCES `song` (`id`);
