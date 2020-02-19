@@ -2,6 +2,7 @@
   "name": "shareaoke",
   "scripts": {
     "start": "node server/index.js",
+    "db": "mysql -u root < schema.sql",
     "dev": "webpack --config webpack.config.js --mode development --watch",
     "build": "webpack --config webpack.config.js --mode production",
     "lint": "eslint . --ext .js,.jsx"
