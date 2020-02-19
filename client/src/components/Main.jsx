@@ -1,6 +1,7 @@
 import React from 'react';
 import FriendsList from './FriendsList.jsx';
-import Playlist from './Playlist.jsx';
+import Playlists from './Playlists.jsx';
+import CreatePlaylist from './CreatePlaylist.jsx';
 
 class Main extends React.Component {
   constructor(props) {
@@ -10,11 +11,11 @@ class Main extends React.Component {
   }
 
   render() {
-    const { friends, playlists } = this.props;
+    const { user, friends, playlists } = this.props;
     return (
       <div>
-        <h1>shareaoke</h1>
-        <Playlist playlists={playlists} />
+        <CreatePlaylist user={user} />
+        <Playlists playlists={playlists} />
         <FriendsList friends={friends} />
       </div>
     );
