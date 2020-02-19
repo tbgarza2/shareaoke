@@ -5,6 +5,11 @@ class Friend extends React.Component {
     super(props);
     this.state = {
     };
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleClick() {
+    
   }
 
   render() {
