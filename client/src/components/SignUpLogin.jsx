@@ -11,7 +11,10 @@ class SignUpLogin extends React.Component {
   render() {
     return (
       <div>
-        <h1>shareaoke</h1>
+        <h2>Shareaoke Sign Up </h2>
+        Username<input /><button>Sign Up</button>
+        <h2>Shareaoke Login </h2>
+        Username<input /><button>Login</button>
       </div>
     );
   }
