@@ -22,3 +22,18 @@ connection.connect(err => {
     console.log('Database connected!');
   }
 });
+
+const createUser = (username) => {
+  const mysqlQuery = 'INSERT INTO user VALUES(null, ?);';
+  return query(mysqlQuery, [username]);
+};
+
+const findUser = (username) => {
+  const mysqlQuery = 'SELECT * FROM user WHERE username = ?;';
+  return query(mysqlQuery, [username]);
+};
+
+module.exports = {
+  createUser,
+  findUser,
+};
