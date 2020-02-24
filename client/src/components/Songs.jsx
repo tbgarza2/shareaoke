@@ -8,12 +8,13 @@ class Songs extends React.Component {
   }
 
   render() {
-    // const { user } = this.props;
     return (
       <div>
-        <li><h5>Song1</h5></li>
-        <li><h5>Song2</h5></li>
-        <li><h5>Song3</h5></li>
+        <ul>
+          <li>Song1</li>
+          <li>Song2</li>
+          <li>Song3</li>
+        </ul>
       </div>
     );
   }
