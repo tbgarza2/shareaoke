@@ -12,7 +12,6 @@ class Playlist extends React.Component {
     const { playlist } = this.props.location.state;
     return (
       <div>
-        <h1>Hello</h1>
         <h3>{playlist}</h3>
         <Songs />
       </div>
