@@ -6,7 +6,7 @@
     "dev": "webpack --config webpack.config.js --mode development --watch",
     "build": "webpack --config webpack.config.js --mode production",
     "lint": "eslint . --ext .js,.jsx",
-    "prestart": "npm run bundle",
+    "prestart": "npm run build",
     "build:gcp": "webpack --config webpack.config.js --mode production && node server/index.js"
   },
   "author": "Team 4 & A Half Star",
