@@ -1,3 +1,5 @@
+/* eslint-disable camelcase */
+
 const mysql = require('mysql');
 const util = require('util');
 
@@ -23,6 +25,7 @@ connection.connect(err => {
   }
 });
 
+// users
 const createUser = (username) => {
   const mysqlQuery = 'INSERT INTO user VALUES(null, ?);';
   return query(mysqlQuery, [username]);
@@ -33,7 +36,20 @@ const findUser = (username) => {
   return query(mysqlQuery, [username]);
 };
 
+// songs
+const addSong = (title, album, artist, genre) => {
+  const mysqlQuery = 'INSERT INTO song VALUES(null, ?, ?, ?, ?);';
+  return query(mysqlQuery, [title, album, artist, genre]);
+};
+
+const findSong = (title) => {
+  const mysqlQuery = 'SELECT * FROM song WHERE title = ?;';
+  return query(mysqlQuery, [title]);
+};
+
 module.exports = {
   createUser,
   findUser,
+  addSong,
+  findSong,
 };
