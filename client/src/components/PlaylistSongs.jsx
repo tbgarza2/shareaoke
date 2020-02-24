@@ -23,7 +23,6 @@ class PlaylistSongs extends React.Component {
       <div>
         <h4 key={playlist} onClick={this.handleClick}>{playlist}</h4>
         { display ? <Songs /> : null}
-        {/* {playlist.map(song => <li><div>{song}</div></li>)} */}
       </div>
     );
   }
