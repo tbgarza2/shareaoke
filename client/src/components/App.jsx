@@ -1,6 +1,11 @@
 import React from 'react';
+import { HashRouter, Switch, Route } from 'react-router-dom';
 import Main from './Main.jsx';
 import SignUpLogin from './SignUpLogin.jsx';
+import FriendsList from './FriendsList.jsx';
+import Playlists from './Playlists.jsx';
+import CreatePlaylist from './CreatePlaylist.jsx';
+
 
 class App extends React.Component {
   constructor(props) {
@@ -19,16 +24,18 @@ class App extends React.Component {
   render() {
     const { user, friends, playlists } = this.state;
     return (
-      <div>
-        <h1>Shareaoke</h1>
-        { user === '' ? <SignUpLogin /> : <Main playlists={playlists} friends={friends} /> }
-        <h1>shareaoke</h1>
-        <a href="http://localhost:8888">
-          <button>Login with Spotify</button>
-        </a>
-      </div>
+      <HashRouter>
+        <Switch>
+          <Route exact path="/" component={SignUpLogin} />
+          <Route path="/main" render={(routerProps) => (<Main {...routerProps} user={user} />)} />
+          <Route path="/playlists" render={(routerProps) => (<Playlists {...routerProps} user={user} playlists={playlists} />)} />
+          <Route path="/friends" render={(routerProps) => (<FriendsList {...routerProps} user={user} friends={friends} />)} />
+          <Route exact path="/createplaylist" component={CreatePlaylist} />
+        </Switch>
+      </HashRouter>
     );
   }
 }
+
 
 export default App;
