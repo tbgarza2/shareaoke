@@ -1,6 +1,5 @@
 import React from 'react';
-import PlaylistSongs from './PlaylistSongs.jsx';
-
+import Songs from './Songs.jsx';
 
 class Playlist extends React.Component {
   constructor(props) {
@@ -10,11 +9,12 @@ class Playlist extends React.Component {
   }
 
   render() {
-    const { playlists } = this.props;
+    const { playlist } = this.props.location.state;
     return (
       <div>
-        <h3>Playlists</h3>
-        {playlists.map(playlist => <PlaylistSongs playlist={playlist} />)}
+        <h1>Hello</h1>
+        <h3>{playlist}</h3>
+        <Songs />
       </div>
     );
   }
