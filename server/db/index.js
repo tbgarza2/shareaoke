@@ -13,6 +13,7 @@ const connection = mysql.createConnection({
   user: DB_USER,
   password: DB_PASS,
   database: DB_NAME,
+  multipleStatements: true,
 });
 
 const query = util.promisify(connection.query).bind(connection);
@@ -47,9 +48,28 @@ const findSong = (title) => {
   return query(mysqlQuery, [title]);
 };
 
+// playlists
+const addPlaylist = (id_user, name, description) => {
+  const mysqlQuery = 'INSERT INTO playlist VALUES(null, ?, ?, ?);';
+  return query(mysqlQuery, [id_user, name, description]);
+};
+
+const addSongToPlaylist = (id_playlist, id_song) => {
+  const mysqlQuery = 'INSERT INTO playlist_song VALUES(null, ?, ?);';
+  return query(mysqlQuery, [id_playlist, id_song]);
+};
+
+const showUserPlaylist = (id_user) => {
+  const mysqlQuery = 'SELECT * FROM playlist WHERE id_user = ?;';
+  return query(mysqlQuery, [id_user]);
+};
+
 module.exports = {
   createUser,
   findUser,
   addSong,
   findSong,
+  addPlaylist,
+  showUserPlaylist,
+  addSongToPlaylist,
 };
