@@ -1,5 +1,10 @@
+/* eslint-disable no-shadow */
+/* eslint-disable no-buffer-constructor */
+/* eslint-disable no-plusplus */
+/* eslint-disable import/no-unresolved */
 /* eslint-disable camelcase */
 /* eslint-disable func-names */
+
 /**
  * This is an example of a basic node.js script that performs
  * the Authorization Code oAuth2 flow to authenticate against
