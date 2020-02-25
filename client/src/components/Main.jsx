@@ -1,7 +1,5 @@
 import React from 'react';
-import FriendsList from './FriendsList.jsx';
-import Playlists from './Playlists.jsx';
-import CreatePlaylist from './CreatePlaylist.jsx';
+import { Link } from 'react-router-dom';
 
 class Main extends React.Component {
   constructor(props) {
@@ -14,9 +12,18 @@ class Main extends React.Component {
     const { user, friends, playlists } = this.props;
     return (
       <div>
-        <CreatePlaylist user={user} />
-        <Playlists playlists={playlists} />
-        <FriendsList friends={friends} />
+        <h1>{user}</h1>
+        <ul>
+          <li>
+            <Link to="/createplaylist">Create a playlist</Link>
+          </li>
+          <li>
+            <Link to="/playlists">Playlists</Link>
+          </li>
+          <li>
+            <Link to="/friends">Friends</Link>
+          </li>
+        </ul>
       </div>
     );
   }
