@@ -5,7 +5,8 @@
     "db": "mysql -u root < schema.sql",
     "dev": "webpack --config webpack.config.js --mode development --watch",
     "build": "webpack --config webpack.config.js --mode production",
-    "lint": "eslint . --ext .js,.jsx"
+    "lint": "eslint . --ext .js,.jsx",
+    "prestart": "npm run build"
   },
   "author": "Team 4 & A Half Star",
   "devDependencies": {
@@ -23,13 +24,20 @@
   },
   "dependencies": {
     "axios": "^0.18.1",
+    "babel": "^6.23.0",
     "body-parser": "^1.19.0",
+    "@babel/core": "^7.4.0",
+    "@babel/preset-env": "^7.4.2",
+    "@babel/preset-react": "^7.0.0",
+    "babel-loader": "^8.0.5",
     "express": "^4.16.4",
     "mysql": "^2.13.0",
     "prop-types": "^15.7.2",
     "react": "^16.8.5",
     "react-dom": "^16.8.5",
     "react-router-dom": "^5.1.2",
-    "spotify-web-api-js": "^0.22.1"
+    "spotify-web-api-js": "^0.22.1",
+    "webpack": "^4.29.6",
+    "webpack-cli": "^3.3.0"
   }
 }
