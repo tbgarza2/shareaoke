@@ -15,8 +15,9 @@ CREATE TABLE `user` (
 
 CREATE TABLE `friend` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
-  `id_user` int,
-  `id_friend` int
+  `id_user` int unique,
+  `id_friend` int,
+  `status` int
 );
 
 CREATE TABLE `playlist` (
@@ -28,7 +29,7 @@ CREATE TABLE `playlist` (
 
 CREATE TABLE `song` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
-  `title` varchar(50),
+  `title` varchar(50) unique,
   `album` varchar(50),
   `artist` varchar(50),
   `genre` varchar(50)
