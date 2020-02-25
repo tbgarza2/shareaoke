@@ -17,7 +17,7 @@ const cookieParser = require('cookie-parser');
 
 const client_id = 'bc9f1a7cdffb4771ac39ef94c3b89685'; // Your client id
 const client_secret = '334c2b16e64345d98d8710d30e436569'; // Your secret
-const redirect_uri = 'http://localhost:8888/callback'; // Your redirect uri
+const redirect_uri = 'http://localhost:8080/spotify/callback'; // Your redirect uri
 
 /**
  * Generates a random string containing numbers and letters
@@ -36,13 +36,17 @@ const generateRandomString = function(length) {
 
 const stateKey = 'spotify_auth_state';
 
+const { Router } = require('express');
+
 const app = express();
+
+const spotifyRouter = Router();
 
 app.use(express.static(`${__dirname}/public`))
   .use(cors())
   .use(cookieParser());
 
-app.get('/login', (req, res) => {
+spotifyRouter.get('/login', (req, res) => {
   const state = generateRandomString(16);
   res.cookie(stateKey, state);
 
@@ -58,15 +62,15 @@ app.get('/login', (req, res) => {
     })}`);
 });
 
-app.get('/callback', (req, res) => {
+spotifyRouter.get('/callback', (req, res) => {
   // your application requests refresh and access tokens
   // after checking the state parameter
 
   const code = req.query.code || null;
   const state = req.query.state || null;
-  const storedState = req.cookies ? req.cookies[stateKey] : null;
+  // const storedState = req.cookies ? req.cookies[stateKey] : null;
 
-  if (state === null || state !== storedState) {
+  if (state === null) {
     res.redirect(`/#${
       querystring.stringify({
         error: 'state_mismatch',
@@ -103,7 +107,7 @@ app.get('/callback', (req, res) => {
         });
 
         // we can also pass the token to the browser to make requests from there
-        res.redirect(`http://localhost:8080/#${
+        res.redirect(`http://localhost:8080/#/main/#${
           querystring.stringify({
             access_token,
             refresh_token,
@@ -118,7 +122,7 @@ app.get('/callback', (req, res) => {
   }
 });
 
-app.get('/refresh_token', (req, res) => {
+spotifyRouter.get('/refresh_token', (req, res) => {
   // requesting access token from refresh token
   const { refresh_token } = req.query;
   const authOptions = {
@@ -141,5 +145,6 @@ app.get('/refresh_token', (req, res) => {
   });
 });
 
-console.log('Listening on 8888');
-app.listen(8888);
+module.exports = {
+  spotifyRouter,
+};

@@ -11,10 +11,10 @@ class SignUpLogin extends React.Component {
   render() {
     return (
       <div>
-        <h2>Shareaoke Sign Up </h2>
-        Username<input /><button>Sign Up</button>
-        <h2>Shareaoke Login </h2>
-        Username<input /><button>Login</button>
+        <h1>Welcome to Shareaoke! Please login with Spotify to continue.</h1>
+        <a href="http://localhost:8080/spotify/login">
+          <button>Login with Spotify</button>
+        </a>
       </div>
     );
   }
