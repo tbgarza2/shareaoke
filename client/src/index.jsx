@@ -1,4 +1,5 @@
 import React from 'react';
+import 'bootstrap';
 import ReactDOM from 'react-dom';
 import { HashRouter } from 'react-router-dom';
 import App from './components/App.jsx';

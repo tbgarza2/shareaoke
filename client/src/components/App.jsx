@@ -1,4 +1,5 @@
 import React from 'react';
+import './App.scss';
 import { HashRouter, Switch, Route } from 'react-router-dom';
 import Main from './Main.jsx';
 import SignUpLogin from './SignUpLogin.jsx';
@@ -28,9 +29,9 @@ class App extends React.Component {
       <HashRouter>
         <Switch>
           <Route exact path="/" component={SignUpLogin} />
-          <Route path="/main" render={(routerProps) => (<Main {...routerProps} user={user} />)} />
-          <Route path="/playlists" render={(routerProps) => (<Playlists {...routerProps} user={user} playlists={playlists} />)} />
-          <Route path="/friends" render={(routerProps) => (<FriendsList {...routerProps} user={user} friends={friends} />)} />
+          <Route exact path="/main" render={(routerProps) => (<Main {...routerProps} user={user} />)} />
+          <Route exact path="/playlists" render={(routerProps) => (<Playlists {...routerProps} user={user} playlists={playlists} />)} />
+          <Route exact path="/friends" render={(routerProps) => (<FriendsList {...routerProps} user={user} friends={friends} />)} />
           <Route exact path="/createplaylist" component={CreatePlaylist} />
           <Route exact path="/playlist" component={Playlist} />
         </Switch>
