@@ -1,5 +1,4 @@
 import React from 'react';
-import './App.scss';
 import { HashRouter, Switch, Route } from 'react-router-dom';
 import Main from './Main.jsx';
 import SignUpLogin from './SignUpLogin.jsx';
