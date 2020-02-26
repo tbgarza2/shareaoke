@@ -5,13 +5,14 @@ class SingleSpotifySong extends React.Component {
     super(props);
     this.state = {
     };
-    
+
     this.addSongToPlaylist = this.addSongToPlaylist.bind(this);
   }
 
   addSongToPlaylist() {
-    const { song } = this.props;
+    const { song, addSong } = this.props;
 
+    addSong({ song });
   }
 
   render() {
