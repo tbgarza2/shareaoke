@@ -15,12 +15,7 @@ class CreatePlaylist extends React.Component {
     this.handleSongNameChange = this.handleSongNameChange.bind(this);
     this.searchSpotifyForSong = this.searchSpotifyForSong.bind(this);
     this.addSongToPlaylist = this.addSongToPlaylist.bind(this);
-  }
-
-  handlePlaylistNameChange(e) {
-    this.setState({
-      playlistName: e.target.value,
-    });
+    this.createPlaylist = this.createPlaylist.bind(this);
   }
 
   handleSongNameChange(e) {
@@ -56,10 +51,36 @@ class CreatePlaylist extends React.Component {
     this.setState({
       songs: songs.concat(song),
     });
-
   }
 
-  createPlaylist() {
+  handlePlaylistNameChange(e) {
+    this.setState({
+      playlistName: e.target.value,
+    });
+  }
+
+  createPlaylist() { // redirect to playlist page and put all music adding stuff onto that page, git add and commit, try and make the video viewer page
+    const { spotifyId, token } = this.props.location.state;
+    const { playlistName } = this.state;
+
+    const data = {
+      name: playlistName,
+      public: 'false',
+      collaborative: 'true',
+      description: 'string example',
+    };
+
+    fetch(`https://api.spotify.com/v1/users/${spotifyId}/playlists`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    })
+      .then((response) => response.json())
+      .then((responseData) => console.log('Success:', responseData))
+      .catch((error) => console.error('Error:', error));
   }
 
   render() {
@@ -73,13 +94,16 @@ class CreatePlaylist extends React.Component {
           Playlist Name: <input value={playlistName} onChange={this.handlePlaylistNameChange} />
         </div>
         <div>
+          Enter a description: <textarea style={{ width: 300 }} onChange={this.handleDescriptionChange} />
+        </div>
+        <button onClick={this.createPlaylist} type="button">Create Playlist</button>
+        <div>
           Search for a song: <input value={song} onChange={this.handleSongNameChange} />
           <button onClick={this.searchSpotifyForSong} type="button">Search for song</button>
         </div>
         <div>
           {display ? <SpotifyResults songData={songData} addSong={this.addSongToPlaylist} /> : null}
         </div>
-        <button onClick={this.createPlaylist} type="button">Make Playlist</button>
       </div>
     );
   }
