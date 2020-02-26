@@ -32,7 +32,8 @@ CREATE TABLE `song` (
   `title` varchar(50) NOT NULL UNIQUE,
   `album` varchar(50),
   `artist` varchar(50) NOT NULL,
-  `genre` varchar(50)
+  `imageURL` varchar(250),
+  `uri` varchar(50)
 );
 
 CREATE TABLE `playlist_song` (
