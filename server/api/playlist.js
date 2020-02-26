@@ -1,7 +1,14 @@
 /* eslint-disable camelcase */
 
 const { Router } = require('express');
-const { addPlaylist, addSongToPlaylist, showUserPlaylist } = require('../db');
+const {
+  addPlaylist,
+  deletePlaylist,
+  removeSongFromPlaylist,
+  addSongToPlaylist,
+  showUserPlaylist,
+  showPlaylistSongs,
+} = require('../db');
 
 const playlistRouter = Router();
 
@@ -12,8 +19,6 @@ playlistRouter.post('/', (req, res) => {
     name,
     description,
   } = req.body;
-
-  console.log(req.body);
 
   addPlaylist(id_user, name, description)
     .then(() => {
@@ -41,11 +46,53 @@ playlistRouter.post('/:id_playlist/:id_song', (req, res) => {
     });
 });
 
-// Show a users playlist
-playlistRouter.get('/:userId', (req, res) => {
-  showUserPlaylist(req.params.userId)
+// delete playlist
+playlistRouter.delete('/:id_playlist', (req, res) => {
+  const { id_playlist } = req.params;
+
+  deletePlaylist(id_playlist)
+    .then(() => {
+      console.log('Playlist successfully deleted!');
+      res.status(201).send('Playlist successfully deleted!');
+    })
+    .catch((err) => {
+      console.log(err);
+      res.sendStatus(500);
+    });
+});
+
+// remove song from playlist
+playlistRouter.delete('/:id_playlist/:id_song', (req, res) => {
+  const { id_playlist, id_song } = req.params;
+
+  removeSongFromPlaylist(id_playlist, id_song)
+    .then(() => {
+      console.log('Song successfully deleted from playlist!');
+      res.status(201).send('Song successfully deleted from to playlist!');
+    })
+    .catch((err) => {
+      console.log(err);
+      res.sendStatus(500);
+    });
+});
+
+// Show a users playlists
+playlistRouter.get('/:id_user', (req, res) => {
+  showUserPlaylist(req.params.id_user)
     .then((playlists) => {
       res.send(playlists);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.sendStatus(500);
+    });
+});
+
+// Show a users songs from playlist
+playlistRouter.get('/songs/:id_playlist', (req, res) => {
+  showPlaylistSongs(req.params.id_playlist)
+    .then((songs) => {
+      res.send(songs);
     })
     .catch((err) => {
       console.log(err);
