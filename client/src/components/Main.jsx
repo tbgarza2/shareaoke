@@ -32,13 +32,13 @@ class Main extends React.Component {
   }
 
   render() {
-    const { spotifyId } = this.state;
+    const { spotifyId, token } = this.state;
     return (
       <div>
         <h1>{spotifyId}</h1>
         <ul>
           <li>
-            <Link to="/createplaylist">Create a playlist</Link>
+            <Link to={{ pathname: '/createplaylist', state: { spotifyId, token } }}>Create a playlist</Link>
           </li>
           <li>
             <Link to="/playlists">Playlists</Link>
