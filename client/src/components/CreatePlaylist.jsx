@@ -6,6 +6,7 @@ class CreatePlaylist extends React.Component {
     this.state = {
       playlistName: '',
       song: '',
+      songData: [],
     };
     this.handlePlaylistNameChange = this.handlePlaylistNameChange.bind(this);
     this.handleSongNameChange = this.handleSongNameChange.bind(this);
@@ -39,7 +40,7 @@ class CreatePlaylist extends React.Component {
       },
     })
       .then(response => response.json())
-      .then(data => console.log(data));
+      .then(data => console.log(data.items));
   }
 
   createPlaylist() {
