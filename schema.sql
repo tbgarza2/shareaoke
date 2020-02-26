@@ -37,8 +37,8 @@ CREATE TABLE `song` (
 
 CREATE TABLE `playlist_song` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
-  `id_playlist` int,
-  `id_song` int
+  `id_playlist` int NOT NULL,
+  `id_song` int NOT NULL
 );
 
 ALTER TABLE `friend` ADD FOREIGN KEY (`id_user`) REFERENCES `user` (`id`);
