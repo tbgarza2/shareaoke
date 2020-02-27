@@ -108,10 +108,15 @@ spotifyRouter.get('/callback', (req, res) => {
 
         // use the access token to access the Spotify Web API
         request.get(options, (error, response, body) => {
+          // get a users basic information
           spotifyRouter.get('/main', (req, res) => {
             res.send(body);
           });
-          console.log(body);
+        });
+
+        // get a users access token
+        spotifyRouter.get('/token', (req, res) => {
+          res.send(body);
         });
 
         // we can also pass the token to the browser to make requests from there
