@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import SpotifyResults from './SpotifyResults.jsx';
 
 class CreatePlaylist extends React.Component {
@@ -7,6 +8,7 @@ class CreatePlaylist extends React.Component {
     this.state = {
       playlistName: '',
       song: '',
+      description: '',
       songs: [],
       songData: [],
       display: false,
@@ -16,6 +18,7 @@ class CreatePlaylist extends React.Component {
     this.searchSpotifyForSong = this.searchSpotifyForSong.bind(this);
     this.addSongToPlaylist = this.addSongToPlaylist.bind(this);
     this.createPlaylist = this.createPlaylist.bind(this);
+    this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
   }
 
   handleSongNameChange(e) {
@@ -59,32 +62,19 @@ class CreatePlaylist extends React.Component {
     });
   }
 
-  createPlaylist() { // redirect to playlist page and put all music adding stuff onto that page, git add and commit, try and make the video viewer page
-    const { spotifyId, token } = this.props.location.state;
-    const { playlistName } = this.state;
+  handleDescriptionChange(e) {
+    this.setState({
+      description: e.target.value,
+    });
+  }
 
-    const data = {
-      name: playlistName,
-      public: 'false',
-      collaborative: 'true',
-      description: 'string example',
-    };
-
-    fetch(`https://api.spotify.com/v1/users/${spotifyId}/playlists`, {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    })
-      .then((response) => response.json())
-      .then((responseData) => console.log('Success:', responseData))
-      .catch((error) => console.error('Error:', error));
+  createPlaylist() {
+    // add playlist to database
   }
 
   render() {
-    const { playlistName, song, display, songData } = this.state;
+    const { playlistName, song, display, songData, description } = this.state;
+    const { spotifyId, token } = this.props.location.state;
 
     return (
       <div>
@@ -94,9 +84,11 @@ class CreatePlaylist extends React.Component {
           Playlist Name: <input value={playlistName} onChange={this.handlePlaylistNameChange} />
         </div>
         <div>
-          Enter a description: <textarea style={{ width: 300 }} onChange={this.handleDescriptionChange} />
+          Enter a description: <textarea style={{ width: 300 }} value={description} onChange={this.handleDescriptionChange} />
         </div>
-        <button onClick={this.createPlaylist} type="button">Create Playlist</button>
+        <Link to={{ pathname: '/playlist', state: { playlistName, description, spotifyId, token } }}>
+          <button onClick={this.createPlaylist} type="button">Create Playlist</button>
+        </Link>
         <div>
           Search for a song: <input value={song} onChange={this.handleSongNameChange} />
           <button onClick={this.searchSpotifyForSong} type="button">Search for song</button>
