@@ -6,12 +6,9 @@ class CreatePlaylist extends React.Component {
     super(props);
     this.state = {
       id_user: 0,
-      userName: 'nass',
+      userName: 'nas',
       playlistName: 'Astro World',
       description: 'travis scott mix',
-      // friendName: '',
-      // songs: [],
-      // friends: [],
     };
     this.handlePlaylistNameChange = this.handlePlaylistNameChange.bind(this);
     this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
