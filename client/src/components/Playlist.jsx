@@ -43,8 +43,7 @@ class Playlist extends React.Component {
   }
 
   searchSpotifyForSong() {
-    let { song, searchDisplay } = this.state;
-    // let songQuery = song.split(' ').join('%20');
+    const { song, searchDisplay } = this.state;
     const songQuery = encodeURIComponent(song);
 
     axios.get('/spotify/token')
@@ -90,7 +89,7 @@ class Playlist extends React.Component {
 
   render() {
     const { currentPlaylist, song, songData, searchDisplay, playerDisplay } = this.state;
-    const { description, token } = this.props.location.state;
+    const { description } = this.props.location.state;
 
     return (
       <div>
