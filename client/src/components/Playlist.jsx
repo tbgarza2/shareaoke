@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 import Songs from './Songs.jsx';
 import SpotifyResults from './SpotifyResults.jsx';
 
@@ -12,6 +13,7 @@ class Playlist extends React.Component {
       songData: [],
       searchDisplay: false,
       playerDisplay: false,
+      token: '',
     };
 
     this.handleSongNameChange = this.handleSongNameChange.bind(this);
@@ -41,23 +43,33 @@ class Playlist extends React.Component {
   }
 
   searchSpotifyForSong() {
-    const { song, searchDisplay } = this.state;
-    let songQuery = song.split(' ').join('%20');
+    let { song, searchDisplay } = this.state;
+    // let songQuery = song.split(' ').join('%20');
+    const songQuery = encodeURIComponent(song);
 
-    const { token } = this.props.location.state;
-
-    fetch(`https://api.spotify.com/v1/search?q=${songQuery}&type=track&market=US&limit=10`, {
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`,
-      },
-    })
-      .then(response => response.json())
-      .then(data => this.setState({
-        songData: data.tracks.items,
-        searchDisplay: !searchDisplay,
-      }));
+    axios.get('/spotify/token')
+      .then((data) => {
+        this.setState({
+          token: data.data.access_token,
+        });
+      })
+      .then(
+        () => {
+          const { token } = this.state;
+          fetch(`https://api.spotify.com/v1/search?q=${songQuery}&type=track&market=US&limit=10`, {
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`,
+            },
+          })
+            .then(response => response.json())
+            .then(data => this.setState({
+              songData: data.tracks.items,
+              searchDisplay: !searchDisplay,
+            }));
+        },
+      );
   }
 
   addSongToPlaylist(song) {
