@@ -19,7 +19,6 @@ playlistRouter.post('/', (req, res) => {
     playlistName,
     description,
   } = req.body;
-  debugger;
   addPlaylist(id_user, playlistName, description)
     .then(() => {
       console.log('Playlist added to database!');
