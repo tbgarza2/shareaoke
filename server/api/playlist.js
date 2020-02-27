@@ -16,11 +16,10 @@ const playlistRouter = Router();
 playlistRouter.post('/', (req, res) => {
   const {
     id_user,
-    name,
+    playlistName,
     description,
   } = req.body;
-
-  addPlaylist(id_user, name, description)
+  addPlaylist(id_user, playlistName, description)
     .then(() => {
       console.log('Playlist added to database!');
       res.status(201).send('Playlist created successfully!');
