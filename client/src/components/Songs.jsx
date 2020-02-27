@@ -12,11 +12,13 @@ class Songs extends React.Component {
   // Wherever we are pulling the songs from the database
 
   render() {
+    const { display } = this.props;
+
     return (
       <div>
         <ul>
-          <li>
-            <Link to="/Player">Song 1</Link>
+          <li onClick={display}>
+            Song 1
           </li>
         </ul>
       </div>
