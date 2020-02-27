@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 class Songs extends React.Component {
   constructor(props) {
@@ -7,13 +8,16 @@ class Songs extends React.Component {
     };
   }
 
+  // need to map over all of the songs on a different component later to make this dynamic
+  // Wherever we are pulling the songs from the database
+
   render() {
     return (
       <div>
         <ul>
-          <li>Song1</li>
-          <li>Song2</li>
-          <li>Song3</li>
+          <li>
+            <Link to="/Player">Song 1</Link>
+          </li>
         </ul>
       </div>
     );
