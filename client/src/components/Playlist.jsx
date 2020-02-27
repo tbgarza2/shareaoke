@@ -10,12 +10,14 @@ class Playlist extends React.Component {
       song: '',
       songs: [],
       songData: [],
-      display: false,
+      searchDisplay: false,
+      playerDisplay: false,
     };
 
     this.handleSongNameChange = this.handleSongNameChange.bind(this);
     this.searchSpotifyForSong = this.searchSpotifyForSong.bind(this);
     this.addSongToPlaylist = this.addSongToPlaylist.bind(this);
+    this.displayClickedSong = this.displayClickedSong.bind(this);
   }
 
   componentDidMount() {
@@ -39,7 +41,7 @@ class Playlist extends React.Component {
   }
 
   searchSpotifyForSong() {
-    const { song, display } = this.state;
+    const { song, searchDisplay } = this.state;
     let songQuery = song.split(' ').join('%20');
 
     const { token } = this.props.location.state;
@@ -54,7 +56,7 @@ class Playlist extends React.Component {
       .then(response => response.json())
       .then(data => this.setState({
         songData: data.tracks.items,
-        display: !display,
+        searchDisplay: !searchDisplay,
       }));
   }
 
@@ -66,22 +68,31 @@ class Playlist extends React.Component {
     });
   }
 
+  displayClickedSong() {
+    const { playerDisplay } = this.state;
+
+    this.setState({
+      playerDisplay: !playerDisplay,
+    });
+  }
+
   render() {
-    const { currentPlaylist, song, songData, display } = this.state;
+    const { currentPlaylist, song, songData, searchDisplay, playerDisplay } = this.state;
     const { description } = this.props.location.state;
 
     return (
       <div>
         <h3>{currentPlaylist}</h3>
         <p>{description}</p>
-        <Songs />
         <div>
-          Search for a song: <input value={song} onChange={this.handleSongNameChange} />
-          <button onClick={this.searchSpotifyForSong} type="button">Search for song</button>
+          Search for a song to add: <input value={song} onChange={this.handleSongNameChange} />
+          <button onClick={this.searchSpotifyForSong} type="button">Search</button>
         </div>
         <div>
-          {display ? <SpotifyResults songData={songData} addSong={this.addSongToPlaylist} /> : null}
+          {searchDisplay ? <SpotifyResults songData={songData} addSong={this.addSongToPlaylist} /> : null}
         </div>
+        <Songs display={this.displayClickedSong} />
+        {playerDisplay ? <h1>Working</h1> : null}
       </div>
     );
   }
