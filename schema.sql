@@ -32,13 +32,14 @@ CREATE TABLE `song` (
   `title` varchar(50) NOT NULL UNIQUE,
   `album` varchar(50),
   `artist` varchar(50) NOT NULL,
-  `genre` varchar(50)
+  `imageURL` varchar(250),
+  `uri` varchar(50)
 );
 
 CREATE TABLE `playlist_song` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
-  `id_playlist` int,
-  `id_song` int
+  `id_playlist` int NOT NULL,
+  `id_song` int NOT NULL
 );
 
 ALTER TABLE `friend` ADD FOREIGN KEY (`id_user`) REFERENCES `user` (`id`);

@@ -13,7 +13,6 @@ const connection = mysql.createConnection({
   user: DB_USER,
   password: DB_PASS,
   database: DB_NAME,
-  multipleStatements: true,
 });
 
 const query = util.promisify(connection.query).bind(connection);
@@ -54,8 +53,22 @@ const addPlaylist = (id_user, name, description) => {
   return query(mysqlQuery, [id_user, name, description]);
 };
 
+const deletePlaylist = (id) => {
+  const mysqlQuery1 = 'DELETE FROM playlist_song WHERE id_playlist = ?;';
+  const mysqlQuery2 = 'DELETE FROM playlist WHERE id = ?;';
+  return query(mysqlQuery1, [id])
+    .then(() => {
+      query(mysqlQuery2, [id]);
+    });
+};
+
 const addSongToPlaylist = (id_playlist, id_song) => {
   const mysqlQuery = 'INSERT INTO playlist_song VALUES(null, ?, ?);';
+  return query(mysqlQuery, [id_playlist, id_song]);
+};
+
+const removeSongFromPlaylist = (id_playlist, id_song) => {
+  const mysqlQuery = 'DELETE FROM playlist_song WHERE id_playlist = ? AND id_song = ?;';
   return query(mysqlQuery, [id_playlist, id_song]);
 };
 
@@ -64,12 +77,20 @@ const showUserPlaylist = (id_user) => {
   return query(mysqlQuery, [id_user]);
 };
 
+const showPlaylistSongs = (id_playlist) => {
+  const mysqlQuery = 'SELECT * FROM playlist WHERE id_user = ?;';
+  return query(mysqlQuery, [id_playlist]);
+};
+
 module.exports = {
   createUser,
   findUser,
   addSong,
   findSong,
   addPlaylist,
-  showUserPlaylist,
+  deletePlaylist,
   addSongToPlaylist,
+  removeSongFromPlaylist,
+  showUserPlaylist,
+  showPlaylistSongs,
 };
