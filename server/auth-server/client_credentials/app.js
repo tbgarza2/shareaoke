@@ -1,3 +1,7 @@
+/* eslint-disable no-buffer-constructor */
+/* eslint-disable prefer-template */
+/* eslint-disable camelcase */
+/* eslint-disable no-shadow */
 /**
  * This is an example of a basic node.js script that performs
  * the Client Credentials oAuth2 flow to authenticate against
@@ -7,16 +11,16 @@
  * https://developer.spotify.com/web-api/authorization-guide/#client_credentials_flow
  */
 
-const request = require('request'); // "Request" library
+import { post, get } from 'request'; // "Request" library
 
-var client_id = 'CLIENT_ID'; // Your client id
-var client_secret = 'CLIENT_SECRET'; // Your secret
+const client_id = 'CLIENT_ID'; // Your client id
+const client_secret = 'CLIENT_SECRET'; // Your secret
 
 // your application requests authorization
 const authOptions = {
   url: 'https://accounts.spotify.com/api/token',
   headers: {
-    Authorization: `Basic ${new Buffer(`${client_id}: ${client_secret}`).toString('base64')}`,
+    Authorization: 'Basic ' + (new Buffer(`${client_id}:${client_secret}`).toString('base64')),
   },
   form: {
     grant_type: 'client_credentials',
@@ -24,7 +28,7 @@ const authOptions = {
   json: true,
 };
 
-request.post(authOptions, (error, response, body) => {
+post(authOptions, (error, response, body) => {
   if (!error && response.statusCode === 200) {
     // use the access token to access the Spotify Web API
     const token = body.access_token;
@@ -35,7 +39,7 @@ request.post(authOptions, (error, response, body) => {
       },
       json: true,
     };
-    request.get(options, (error, response, body) => {
+    get(options, (error, response, body) => {
       console.log(body);
     });
   }

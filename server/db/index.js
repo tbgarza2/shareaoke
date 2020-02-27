@@ -47,9 +47,50 @@ const findSong = (title) => {
   return query(mysqlQuery, [title]);
 };
 
+// playlists
+const addPlaylist = (id_user, name, description) => {
+  const mysqlQuery = 'INSERT INTO playlist VALUES(null, ?, ?, ?);';
+  return query(mysqlQuery, [id_user, name, description]);
+};
+
+const deletePlaylist = (id) => {
+  const mysqlQuery1 = 'DELETE FROM playlist_song WHERE id_playlist = ?;';
+  const mysqlQuery2 = 'DELETE FROM playlist WHERE id = ?;';
+  return query(mysqlQuery1, [id])
+    .then(() => {
+      query(mysqlQuery2, [id]);
+    });
+};
+
+const addSongToPlaylist = (id_playlist, id_song) => {
+  const mysqlQuery = 'INSERT INTO playlist_song VALUES(null, ?, ?);';
+  return query(mysqlQuery, [id_playlist, id_song]);
+};
+
+const removeSongFromPlaylist = (id_playlist, id_song) => {
+  const mysqlQuery = 'DELETE FROM playlist_song WHERE id_playlist = ? AND id_song = ?;';
+  return query(mysqlQuery, [id_playlist, id_song]);
+};
+
+const showUserPlaylist = (id_user) => {
+  const mysqlQuery = 'SELECT * FROM playlist WHERE id_user = ?;';
+  return query(mysqlQuery, [id_user]);
+};
+
+const showPlaylistSongs = (id_playlist) => {
+  const mysqlQuery = 'SELECT * FROM playlist WHERE id_user = ?;';
+  return query(mysqlQuery, [id_playlist]);
+};
+
 module.exports = {
   createUser,
   findUser,
   addSong,
   findSong,
+  addPlaylist,
+  deletePlaylist,
+  addSongToPlaylist,
+  removeSongFromPlaylist,
+  showUserPlaylist,
+  showPlaylistSongs,
 };

@@ -14,6 +14,7 @@ songRouter.post('/', (req, res) => {
   addSong(title, album, artist, genre)
     .then(() => {
       console.log('Song added to database!');
+      res.sendStatus(201);
     })
     .catch((err) => {
       console.log(err);
