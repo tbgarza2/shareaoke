@@ -5,8 +5,8 @@ class CreatePlaylist extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      userID: 0,
-      userName: 'notinalready',
+      id_user: 0,
+      userName: 'nass',
       playlistName: 'Astro World',
       description: 'travis scott mix',
       // friendName: '',
@@ -25,10 +25,9 @@ class CreatePlaylist extends React.Component {
     return axios
       .get(`/api/user/${userName}`)
       .then(userInfo => {
-        console.log(userInfo);
-        debugger;
+        console.log(userInfo.data[0].id);
         this.setState({
-          userID: 0,
+          id_user: userInfo.data[0].id,
         });
         this.addPlaylist();
       })
@@ -66,12 +65,12 @@ class CreatePlaylist extends React.Component {
 
   addPlaylist() {
     console.log('click');
-    const { userID, playlistName, description } = this.state;
-    console.log(userID);
+    const { id_user, playlistName, description } = this.state;
+    console.log(id_user);
     console.log(playlistName);
     console.log(description);
     return axios
-      .post('/api/playlist', { userID, playlistName, description })
+      .post('/api/playlist', { id_user, playlistName, description })
       .then(response => {
         console.log('added to database', response);
       })
