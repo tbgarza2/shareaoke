@@ -78,7 +78,7 @@ class Playlist extends React.Component {
 
   render() {
     const { currentPlaylist, song, songData, searchDisplay, playerDisplay } = this.state;
-    const { description } = this.props.location.state;
+    const { description, token } = this.props.location.state;
 
     return (
       <div>
@@ -92,7 +92,9 @@ class Playlist extends React.Component {
           {searchDisplay ? <SpotifyResults songData={songData} addSong={this.addSongToPlaylist} /> : null}
         </div>
         <Songs display={this.displayClickedSong} />
-        {playerDisplay ? <h1>Working</h1> : null}
+        {playerDisplay ?
+          <h1>Display clicked song</h1>
+          : null}
       </div>
     );
   }
