@@ -24,7 +24,7 @@ CREATE TABLE `playlist` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
   `id_user` int NOT NULL,
   `name` varchar(250) NOT NULL,
-  `decription` varchar(250)
+  `description` varchar(250)
 );
 
 CREATE TABLE `song` (
