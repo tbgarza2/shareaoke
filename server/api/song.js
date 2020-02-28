@@ -8,10 +8,11 @@ songRouter.post('/', (req, res) => {
     title,
     album,
     artist,
-    genre,
+    imageURL,
+    uri,
   } = req.body;
 
-  addSong(title, album, artist, genre)
+  addSong(title, album, artist, imageURL, uri)
     .then(() => {
       console.log('Song added to database!');
       res.sendStatus(201);
