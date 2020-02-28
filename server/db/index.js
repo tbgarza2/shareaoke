@@ -84,26 +84,19 @@ const showPlaylistSongs = (id_playlist) => {
 
 // friends
 const sendFriendRequest = (id_user, id_friend) => {
-  const mysqlQuery = 'INSERT INTO friend VALUES(null, ?, ?, ?);';
-
-  return query(mysqlQuery, [id_user, id_friend, 1])
-    .then(() => {
-      query(mysqlQuery, [id_friend, id_user, 0]);
-    });
+  const mysqlQuery = 'INSERT INTO friend VALUES(null, ?, ?, ?, ?);';
+  return query(mysqlQuery, [id_user, id_friend, 1, 0]);
 };
 
 const acceptFriendRequest = (id_user, id_friend) => {
-  const mysqlQuery = 'UPDATE friend SET status = 1 WHERE id_user = ? AND id_friend = ?;';
+  const mysqlQuery = 'UPDATE friend SET status2 = 1 WHERE id_user = ? AND id_friend = ?;';
   return query(mysqlQuery, [id_user, id_friend]);
 };
 
 // Used for both declining and removing friends
 const removeFriend = (id_user, id_friend) => {
   const mysqlQuery = 'DELETE FROM friend WHERE id_user = ? AND id_friend = ?;';
-  return query(mysqlQuery, [id_user, id_friend])
-    .then(() => {
-      query(mysqlQuery, [id_friend, id_user]);
-    });
+  return query(mysqlQuery, [id_user, id_friend]);
 };
 
 const showFriends = (id) => {
@@ -111,10 +104,43 @@ const showFriends = (id) => {
     SELECT user.username
     FROM friend
     INNER JOIN user
+    ON user.id = friend.id_friend
+    WHERE friend.id_user = ?
+    AND status1 = 1
+    AND status2 = 1
+    UNION
+    SELECT user.username
+    FROM friend
+    INNER JOIN user
     ON user.id = friend.id_user
     WHERE friend.id_friend = ?
-    AND NOT status = 0;`;
-  return query(mysqlQuery, [id]);
+    AND status1 = 1
+    AND status2 = 1;`;
+  return query(mysqlQuery, [id, id]);
+};
+
+const showPendingRequests = (id) => {
+  const mysqlQuery = `
+    SELECT user.username
+    FROM friend
+    INNER JOIN user
+    ON user.id = friend.id_friend
+    WHERE friend.id_user = ?
+    AND status1 = 1
+    AND status2 = 0`;
+  return query(mysqlQuery, [id, id]);
+};
+
+const showReceivedRequests = (id) => {
+  const mysqlQuery = `
+    SELECT user.username
+    FROM friend
+    INNER JOIN user
+    ON user.id = friend.id_user
+    WHERE friend.id_friend = ?
+    AND status1 = 1
+    AND status2 = 0`;
+  return query(mysqlQuery, [id, id]);
 };
 
 module.exports = {
@@ -136,4 +162,6 @@ module.exports = {
   acceptFriendRequest,
   removeFriend,
   showFriends,
+  showPendingRequests,
+  showReceivedRequests,
 };
