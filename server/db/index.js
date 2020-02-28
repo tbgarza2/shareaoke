@@ -37,9 +37,9 @@ const findUser = (username) => {
 };
 
 // songs
-const addSong = (title, album, artist, genre) => {
-  const mysqlQuery = 'INSERT INTO song VALUES(null, ?, ?, ?, ?);';
-  return query(mysqlQuery, [title, album, artist, genre]);
+const addSong = (title, album, artist, imageURL, uri) => {
+  const mysqlQuery = 'INSERT INTO song VALUES(null, ?, ?, ?, ?, ?);';
+  return query(mysqlQuery, [title, album, artist, imageURL, uri]);
 };
 
 const findSong = (title) => {
@@ -82,15 +82,58 @@ const showPlaylistSongs = (id_playlist) => {
   return query(mysqlQuery, [id_playlist]);
 };
 
+// friends
+const sendFriendRequest = (id_user, id_friend) => {
+  const mysqlQuery = 'INSERT INTO friend VALUES(null, ?, ?, ?);';
+
+  return query(mysqlQuery, [id_user, id_friend, 1])
+    .then(() => {
+      query(mysqlQuery, [id_friend, id_user, 0]);
+    });
+};
+
+const acceptFriendRequest = (id_user, id_friend) => {
+  const mysqlQuery = 'UPDATE friend SET status = 1 WHERE id_user = ? AND id_friend = ?;';
+  return query(mysqlQuery, [id_user, id_friend]);
+};
+
+// Used for both declining and removing friends
+const removeFriend = (id_user, id_friend) => {
+  const mysqlQuery = 'DELETE FROM friend WHERE id_user = ? AND id_friend = ?;';
+  return query(mysqlQuery, [id_user, id_friend])
+    .then(() => {
+      query(mysqlQuery, [id_friend, id_user]);
+    });
+};
+
+const showFriends = (id) => {
+  const mysqlQuery = `
+    SELECT user.username
+    FROM friend
+    INNER JOIN user
+    ON user.id = friend.id_user
+    WHERE friend.id_friend = ?
+    AND NOT status = 0;`;
+  return query(mysqlQuery, [id]);
+};
+
 module.exports = {
+  // users
   createUser,
   findUser,
+  // songs
   addSong,
   findSong,
+  // playlists
   addPlaylist,
   deletePlaylist,
   addSongToPlaylist,
   removeSongFromPlaylist,
   showUserPlaylist,
   showPlaylistSongs,
+  // friends
+  sendFriendRequest,
+  acceptFriendRequest,
+  removeFriend,
+  showFriends,
 };
