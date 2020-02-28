@@ -22,7 +22,7 @@ const cookieParser = require('cookie-parser');
 
 const client_id = 'bc9f1a7cdffb4771ac39ef94c3b89685'; // Your client id
 const client_secret = '334c2b16e64345d98d8710d30e436569'; // Your secret
-const redirect_uri = 'http://localhost:8080/spotify/callback'; // Your redirect uri
+const redirect_uri = 'http://team4ahalfstar.appspot.com/spotify/callback'; // Your redirect uri TBG Hardcoded
 
 /**
  * Generates a random string containing numbers and letters
@@ -120,8 +120,8 @@ spotifyRouter.get('/callback', (req, res) => {
         });
 
         // we can also pass the token to the browser to make requests from there
-        const url = 'localhost:8080' || 'team4ahalfstar.appspot.com';
-        res.redirect(`http://${url}/#/main/#${
+        // const url = 'localhost:8080' || 'team4ahalfstar.appspot.com';
+        res.redirect(`http://team4ahalfstar.appspot.com/#/main/#${
           querystring.stringify({
             access_token,
             refresh_token,
