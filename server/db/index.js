@@ -3,9 +3,9 @@
 const mysql = require('mysql');
 const util = require('util');
 
-const DB_HOST = 'localhost';
-const DB_USER = 'root';
-const DB_PASS = '';
+const DB_HOST = '34.70.53.155';
+const DB_USER = 'team4ahalfstar';
+const DB_PASS = 'team4ahalfstar';
 const DB_NAME = 'shareaoke';
 
 const connection = mysql.createConnection({
