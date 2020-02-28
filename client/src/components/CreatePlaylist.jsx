@@ -48,13 +48,13 @@ class CreatePlaylist extends React.Component {
   }
 
   handlePlaylistNameChange(e) {
-    this.setState = ({
+    this.setState({
       playlistName: e.target.value,
     });
   }
 
   handleDescriptionChange(e) {
-    this.setState = ({
+    this.setState({
       playlistName: e.target.value,
     });
   }
