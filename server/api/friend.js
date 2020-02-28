@@ -6,12 +6,13 @@ const {
   acceptFriendRequest,
   removeFriend,
   showFriends,
-  showPendingRequests,
+  showSentRequests,
   showReceivedRequests,
 } = require('../db');
 
 const friendRouter = Router();
 
+// Send friend request
 friendRouter.post('/request/:id_user/:id_friend', (req, res) => {
   const { id_user, id_friend } = req.params;
 
@@ -26,6 +27,7 @@ friendRouter.post('/request/:id_user/:id_friend', (req, res) => {
     });
 });
 
+// Accept a friend request
 friendRouter.patch('/accept/:id_user/:id_friend', (req, res) => {
   const { id_user, id_friend } = req.params;
 
@@ -40,6 +42,7 @@ friendRouter.patch('/accept/:id_user/:id_friend', (req, res) => {
     });
 });
 
+// Decline a friend request/remove a friend
 friendRouter.delete('/remove/:id_user/:id_friend', (req, res) => {
   const { id_user, id_friend } = req.params;
 
@@ -54,12 +57,13 @@ friendRouter.delete('/remove/:id_user/:id_friend', (req, res) => {
     });
 });
 
+// Get a users friends
 friendRouter.get('/:id', (req, res) => {
   const { id } = req.params;
 
   showFriends(id)
     .then((friends) => {
-      res.send(friends.map(friend => friend.username));
+      res.send(friends);
     })
     .catch((err) => {
       console.log(err);
@@ -67,12 +71,13 @@ friendRouter.get('/:id', (req, res) => {
     });
 });
 
+// Get a users sent friend requests
 friendRouter.get('/sent/:id', (req, res) => {
   const { id } = req.params;
 
-  showPendingRequests(id)
+  showSentRequests(id)
     .then((friends) => {
-      res.send(friends.map(friend => friend.username));
+      res.send(friends);
     })
     .catch((err) => {
       console.log(err);
@@ -80,12 +85,13 @@ friendRouter.get('/sent/:id', (req, res) => {
     });
 });
 
+// Get a users recieved friend requests
 friendRouter.get('/recieved/:id', (req, res) => {
   const { id } = req.params;
 
   showReceivedRequests(id)
     .then((friends) => {
-      res.send(friends.map(friend => friend.username));
+      res.send(friends);
     })
     .catch((err) => {
       console.log(err);

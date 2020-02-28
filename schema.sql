@@ -15,10 +15,9 @@ CREATE TABLE `user` (
 
 CREATE TABLE `friend` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
-  `id_user` int NOT NULL,
-  `id_friend` int NOT NULL,
-  `status1` int,
-  `status2` int
+  `id_sender` int NOT NULL,
+  `id_recepient` int NOT NULL,
+  `status` int
 );
 
 CREATE TABLE `playlist` (

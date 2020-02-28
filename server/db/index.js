@@ -48,9 +48,9 @@ const findSong = (title) => {
 };
 
 // playlists
-const addPlaylist = (id_user, name, description) => {
+const addPlaylist = (id_sender, name, description) => {
   const mysqlQuery = 'INSERT INTO playlist VALUES(null, ?, ?, ?);';
-  return query(mysqlQuery, [id_user, name, description]);
+  return query(mysqlQuery, [id_sender, name, description]);
 };
 
 const deletePlaylist = (id) => {
@@ -72,31 +72,31 @@ const removeSongFromPlaylist = (id_playlist, id_song) => {
   return query(mysqlQuery, [id_playlist, id_song]);
 };
 
-const showUserPlaylist = (id_user) => {
-  const mysqlQuery = 'SELECT * FROM playlist WHERE id_user = ?;';
-  return query(mysqlQuery, [id_user]);
+const showUserPlaylist = (id_sender) => {
+  const mysqlQuery = 'SELECT * FROM playlist WHERE id_sender = ?;';
+  return query(mysqlQuery, [id_sender]);
 };
 
 const showPlaylistSongs = (id_playlist) => {
-  const mysqlQuery = 'SELECT * FROM playlist WHERE id_user = ?;';
+  const mysqlQuery = 'SELECT * FROM playlist WHERE id_sender = ?;';
   return query(mysqlQuery, [id_playlist]);
 };
 
 // friends
-const sendFriendRequest = (id_user, id_friend) => {
-  const mysqlQuery = 'INSERT INTO friend VALUES(null, ?, ?, ?, ?);';
-  return query(mysqlQuery, [id_user, id_friend, 1, 0]);
+const sendFriendRequest = (id_sender, id_recepient) => {
+  const mysqlQuery = 'INSERT INTO friend VALUES(null, ?, ?, ?);';
+  return query(mysqlQuery, [id_sender, id_recepient, 0]);
 };
 
-const acceptFriendRequest = (id_user, id_friend) => {
-  const mysqlQuery = 'UPDATE friend SET status2 = 1 WHERE id_user = ? AND id_friend = ?;';
-  return query(mysqlQuery, [id_user, id_friend]);
+const acceptFriendRequest = (id_sender, id_recepient) => {
+  const mysqlQuery = 'UPDATE friend SET status = 1 WHERE id_sender = ? AND id_recepient = ?;';
+  return query(mysqlQuery, [id_sender, id_recepient]);
 };
 
 // Used for both declining and removing friends
-const removeFriend = (id_user, id_friend) => {
-  const mysqlQuery = 'DELETE FROM friend WHERE id_user = ? AND id_friend = ?;';
-  return query(mysqlQuery, [id_user, id_friend]);
+const removeFriend = (id_sender, id_recepient) => {
+  const mysqlQuery = 'DELETE FROM friend WHERE id_sender = ? AND id_recepient = ?;';
+  return query(mysqlQuery, [id_sender, id_recepient]);
 };
 
 const showFriends = (id) => {
@@ -104,30 +104,27 @@ const showFriends = (id) => {
     SELECT user.username
     FROM friend
     INNER JOIN user
-    ON user.id = friend.id_friend
-    WHERE friend.id_user = ?
-    AND status1 = 1
-    AND status2 = 1
+    ON user.id = friend.id_recepient
+    WHERE friend.id_sender = ?
+    AND status = 1
     UNION
     SELECT user.username
     FROM friend
     INNER JOIN user
-    ON user.id = friend.id_user
-    WHERE friend.id_friend = ?
-    AND status1 = 1
-    AND status2 = 1;`;
+    ON user.id = friend.id_sender
+    WHERE friend.id_recepient = ?
+    AND status = 1;`;
   return query(mysqlQuery, [id, id]);
 };
 
-const showPendingRequests = (id) => {
+const showSentRequests = (id) => {
   const mysqlQuery = `
     SELECT user.username
     FROM friend
     INNER JOIN user
-    ON user.id = friend.id_friend
-    WHERE friend.id_user = ?
-    AND status1 = 1
-    AND status2 = 0`;
+    ON user.id = friend.id_recepient
+    WHERE friend.id_sender = ?
+    AND status = 0`;
   return query(mysqlQuery, [id, id]);
 };
 
@@ -136,10 +133,9 @@ const showReceivedRequests = (id) => {
     SELECT user.username
     FROM friend
     INNER JOIN user
-    ON user.id = friend.id_user
-    WHERE friend.id_friend = ?
-    AND status1 = 1
-    AND status2 = 0`;
+    ON user.id = friend.id_sender
+    WHERE friend.id_recepient = ?
+    AND status = 0`;
   return query(mysqlQuery, [id, id]);
 };
 
@@ -162,6 +158,6 @@ module.exports = {
   acceptFriendRequest,
   removeFriend,
   showFriends,
-  showPendingRequests,
+  showSentRequests,
   showReceivedRequests,
 };
