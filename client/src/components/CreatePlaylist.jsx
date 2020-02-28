@@ -26,7 +26,7 @@ class CreatePlaylist extends React.Component {
 
   render() {
     const { playlistName, description } = this.state;
-    const { spotifyId, token } = this.props.location.state;
+    const { username, token } = this.props.location.state;
 
     return (
       <div>
@@ -43,7 +43,7 @@ class CreatePlaylist extends React.Component {
             onChange={this.handleDescriptionChange}
           />
         </div>
-        <Link to={{ pathname: '/playlist', state: { playlistName, description, spotifyId, token } }}>
+        <Link to={{ pathname: '/playlist', state: { playlistName, description, username, token } }}>
           <button onClick={this.createPlaylist} type="button">Create Playlist</button>
         </Link>
       </div>
