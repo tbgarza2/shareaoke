@@ -1,11 +1,13 @@
 import React from 'react';
 import querystring from 'querystring';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 class Main extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      id_user: 0,
       token: '',
       username: '',
     };
@@ -15,6 +17,7 @@ class Main extends React.Component {
     const parsedToken = querystring.parse(window.location.hash);
     const token = parsedToken['#/main/#access_token'];
 
+
     this.setState({
       token,
     });
@@ -22,13 +25,52 @@ class Main extends React.Component {
     fetch('https://api.spotify.com/v1/me', {
       method: 'GET',
       headers: {
-        'Authorization': `Bearer ${token}`
+        Authorization: `Bearer ${token}`,
       },
     })
       .then(response => response.json())
       .then(data => this.setState({
         username: data.display_name,
-      }));
+      })).then(() => {
+        this.getUserInfo();
+      });
+
+    // get username from users
+    // then set id in state
+    // in catch call create user to save a new user to db
+
+    // call to check if a user is in the db then continue
+  }
+
+  getUserInfo() {
+    const { username } = this.state;
+    console.log('fetching user info');
+    return axios
+      .get(`/api/user/${username}`)
+      .then(userInfo => {
+        console.log(userInfo.data[0].id);
+        this.setState({
+          id_user: userInfo.data[0].id,
+        });
+        // this.addPlaylist();
+      })
+      .catch(() => {
+        this.createUser();
+      });
+  }
+
+  createUser() {
+    console.log('creating user');
+    const { username } = this.state;
+    return axios
+      .post(`/api/user/${username}`)
+      .then(userInfo => {
+        console.log(userInfo.data);
+        this.getUserInfo();
+      })
+      .catch(err => {
+        console.log(err);
+      });
   }
 
   render() {
