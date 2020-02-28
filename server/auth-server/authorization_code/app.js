@@ -120,7 +120,8 @@ spotifyRouter.get('/callback', (req, res) => {
         });
 
         // we can also pass the token to the browser to make requests from there
-        res.redirect(`http://localhost:8080/#/main/#${
+        const url = 'localhost:8080' || 'team4ahalfstar.appspot.com';
+        res.redirect(`http://${url}/#/main/#${
           querystring.stringify({
             access_token,
             refresh_token,
