@@ -7,7 +7,7 @@ class Main extends React.Component {
     super(props);
     this.state = {
       token: '',
-      spotifyId: '',
+      username: '',
     };
   }
 
@@ -27,24 +27,27 @@ class Main extends React.Component {
     })
       .then(response => response.json())
       .then(data => this.setState({
-        spotifyId: data.display_name,
+        username: data.display_name,
       }));
   }
 
   render() {
-    const { spotifyId, token } = this.state;
+    const { username, token } = this.state;
     return (
       <div>
-        <h1>{spotifyId}</h1>
+        <h1>{username}</h1>
         <ul>
           <li>
-            <Link to={{ pathname: '/createplaylist', state: { spotifyId, token } }}>Create a playlist</Link>
+            <Link to={{ pathname: '/createplaylist', state: { username, token } }}>Create a playlist</Link>
           </li>
           <li>
             <Link to="/playlists">Playlists</Link>
           </li>
           <li>
             <Link to="/friends">Friends</Link>
+          </li>
+          <li>
+            <Link to={{ pathname: '/search', state: { username } }}>Search for songs to add to a playlist</Link>
           </li>
         </ul>
       </div>
