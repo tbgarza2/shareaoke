@@ -1,24 +1,14 @@
 import React from 'react';
-import axios from 'axios';
 import Songs from './Songs.jsx';
-import SpotifyResults from './SpotifyResults.jsx';
 
 class Playlist extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       currentPlaylist: '',
-      song: '',
-      songs: [],
-      songData: [],
-      searchDisplay: false,
       playerDisplay: false,
-      token: '',
+      description: '',
     };
-
-    this.handleSongNameChange = this.handleSongNameChange.bind(this);
-    this.searchSpotifyForSong = this.searchSpotifyForSong.bind(this);
-    this.addSongToPlaylist = this.addSongToPlaylist.bind(this);
     this.displayClickedSong = this.displayClickedSong.bind(this);
   }
 
@@ -34,49 +24,12 @@ class Playlist extends React.Component {
         currentPlaylist: this.props.location.state.playlistName,
       });
     }
-  }
 
-  handleSongNameChange(e) {
-    this.setState({
-      song: e.target.value,
-    });
-  }
-
-  searchSpotifyForSong() {
-    const { song, searchDisplay } = this.state;
-    const songQuery = encodeURIComponent(song);
-
-    axios.get('/spotify/token')
-      .then((data) => {
-        this.setState({
-          token: data.data.access_token,
-        });
-      })
-      .then(
-        () => {
-          const { token } = this.state;
-          fetch(`https://api.spotify.com/v1/search?q=${songQuery}&type=track&market=US&limit=10`, {
-            headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json',
-              'Authorization': `Bearer ${token}`,
-            },
-          })
-            .then(response => response.json())
-            .then(data => this.setState({
-              songData: data.tracks.items,
-              searchDisplay: !searchDisplay,
-            }));
-        },
-      );
-  }
-
-  addSongToPlaylist(song) {
-    const { songs } = this.state;
-
-    this.setState({
-      songs: songs.concat(song),
-    });
+    if (this.props.location.state.description) {
+      this.setState({
+        description: this.props.location.state.description,
+      });
+    }
   }
 
   displayClickedSong() {
@@ -88,20 +41,12 @@ class Playlist extends React.Component {
   }
 
   render() {
-    const { currentPlaylist, song, songData, searchDisplay, playerDisplay } = this.state;
-    const { description } = this.props.location.state;
+    const { currentPlaylist, description, playerDisplay } = this.state;
 
     return (
       <div>
         <h3>{currentPlaylist}</h3>
         <p>{description}</p>
-        <div>
-          Search for a song to add: <input value={song} onChange={this.handleSongNameChange} />
-          <button onClick={this.searchSpotifyForSong} type="button">Search</button>
-        </div>
-        <div>
-          {searchDisplay ? <SpotifyResults songData={songData} addSong={this.addSongToPlaylist} /> : null}
-        </div>
         <Songs display={this.displayClickedSong} />
         {playerDisplay ?
           <h1>Display clicked song</h1>
