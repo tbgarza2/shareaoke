@@ -6,7 +6,7 @@ const { spotifyRouter } = require('./auth-server/authorization_code/app');
 
 const app = express();
 
-const PORT = 8080;
+const PORT = process.env.PORT || 8080;
 const CLIENT_PATH = path.join(__dirname, '../client/dist');
 
 app.use(express.static(CLIENT_PATH));
