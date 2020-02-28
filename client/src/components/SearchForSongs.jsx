@@ -20,12 +20,12 @@ class SearchForSongs extends React.Component {
   componentDidMount() {
     // find user id by username
     // get all of that users playlists
-    const { username } = this.props.location.state;
+    // const { username } = this.props.location.state;
 
-    axios.get(`/api/user/${username}`)
-      .then((data) => axios.get(`/api/playlist/${data.data[0].id}`)
-        .then(playlists => this.setState({ playlists: playlists.data, })))
-      .catch(err => console.error(err));
+    // axios.get(`/api/user/${username}`)
+    //   .then((data) => axios.get(`/api/playlist/${data.data[0].id}`)
+    //     .then(playlists => this.setState({ playlists: playlists.data, })))
+    //   .catch(err => console.error(err));
   }
 
   handleSongNameChange(e) {
@@ -67,11 +67,11 @@ class SearchForSongs extends React.Component {
     const title = song.song.name;
     const album = song.song.album.name;
     const artist = song.song.album.artists[0].name;
-    const genre = 'string';
-    // need to add uri and delete genre
+    const image = song.song.album.images[0].url;
+    const uri = song.song.uri;
 
     return axios
-      .post('/api/song', { title, album, artist, genre })
+      .post('/api/song', { title, album, artist, image, uri })
       .then(response => {
         console.log('added song to database', response);
       })
