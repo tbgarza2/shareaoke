@@ -37,9 +37,9 @@ const findUser = (username) => {
 };
 
 // songs
-const addSong = (title, album, artist, genre) => {
-  const mysqlQuery = 'INSERT INTO song VALUES(null, ?, ?, ?, ?);';
-  return query(mysqlQuery, [title, album, artist, genre]);
+const addSong = (title, album, artist, imageURL, uri) => {
+  const mysqlQuery = 'INSERT INTO song VALUES(null, ?, ?, ?, ?, ?);';
+  return query(mysqlQuery, [title, album, artist, imageURL, uri]);
 };
 
 const findSong = (title) => {
