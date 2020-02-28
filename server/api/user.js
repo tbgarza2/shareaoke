@@ -5,8 +5,9 @@ const userRouter = Router();
 
 userRouter.post('/:name', (req, res) => {
   createUser(req.params.name)
-    .then(() => {
-      res.status(201).send('Account created!');
+    .then((user) => {
+      console.log('Account created!');
+      res.send(201, user.insertId);
     })
     .catch((err) => {
       console.log(err);
