@@ -12,20 +12,21 @@ class SearchForSongs extends React.Component {
       token: '',
       playlists: [],
       songId: 0,
+      playlistId: 0,
     };
     this.handleSongNameChange = this.handleSongNameChange.bind(this);
     this.searchSpotifyForSong = this.searchSpotifyForSong.bind(this);
     this.addSongToDatabase = this.addSongToDatabase.bind(this);
-    // this.addSongToPlaylist = this.addSongToPlaylist.bind(this);
+    this.addSongToPlaylist = this.addSongToPlaylist.bind(this);
   }
 
   componentDidMount() {
     const { username } = this.props.location.state;
 
-    // axios.get(`/api/user/${username}`)
-    //   .then((data) => axios.get(`/api/playlist/${data.data[0].id}`)
-    //     .then(playlists => this.setState({ playlists: playlists.data, })))
-    //   .catch(err => console.error(err));
+    axios.get(`/api/user/${username}`)
+      .then((data) => axios.get(`/api/playlist/${data.data[0].id}`)
+        .then(playlists => this.setState({ playlists: playlists.data })))
+      .catch(err => console.error(err));
   }
 
   handleSongNameChange(e) {
@@ -63,32 +64,35 @@ class SearchForSongs extends React.Component {
       );
   }
 
-  addSongToDatabase(song) {
-    const title = song.song.name;
-    const album = song.song.album.name;
-    const artist = song.song.album.artists[0].name;
-    const imageURL = song.song.album.images[0].url;
-    const uri = song.song.uri;
+  addSongToDatabase({ song }, selectedPlaylist) {
+    const title = song.name;
+    const album = song.album.name;
+    const artist = song.album.artists[0].name;
+    const imageURL = song.album.images[0].url;
+    const uri = song.uri;
 
-    // console.log(imageURL);
-    
-    // return axios
-    //   .post('/api/song', { title, album, artist, imageURL, uri })
-    //   .then(response => {
-    //     console.log('added song to database', response);
-    //   })
-    //   .catch(err => {
-    //     console.error(err);
-    //   });
+    const { playlists } = this.state;
 
-    // return axios
-    //   .post('/api/song', { title, album, artist, image, uri })
-    //   .then(axios.get(`/api/song/${title}`).then(data => this.setState({ songId: data.data[0].id })))
+    const correctPlaylist = playlists.filter(e => e.name === selectedPlaylist);
+    const correctPlaylistId = correctPlaylist[0].id;
+
+    return axios
+      .post('/api/song', { title, album, artist, imageURL, uri })
+      .then(axios.get(`/api/song/${title}`)
+        .then(data => this.setState({ songId: data.data[0].id }))
+        .then(() => this.setState({ playlistId: correctPlaylistId }))
+        .then(() => this.addSongToPlaylist()))
+      .catch(err => console.error(err));
   }
 
-  // addSongToPlaylist() {
+  addSongToPlaylist() {
+    const { playlistId, songId } = this.state;
 
-  // }
+    return axios
+      .post(`/api/playlist/${playlistId}/${songId}`)
+      .then(response => console.log('Added song to playlist!', response))
+      .catch(err => console.error(err));
+  }
 
   render() {
     const { song, songData, searchDisplay, playlists } = this.state;
