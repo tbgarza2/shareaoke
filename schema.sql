@@ -42,11 +42,11 @@ CREATE TABLE `playlist_song` (
   `id_song` int NOT NULL
 );
 
-ALTER TABLE `friend` ADD FOREIGN KEY (`id_user`) REFERENCES `user` (`id`);
+ALTER TABLE `friend` ADD FOREIGN KEY (`id_sender`) REFERENCES `user` (`id`);
 
-ALTER TABLE `friend` ADD FOREIGN KEY (`id_friend`) REFERENCES `user` (`id`);
+ALTER TABLE `friend` ADD FOREIGN KEY (`id_recepient`) REFERENCES `user` (`id`);
 
-CREATE UNIQUE INDEX `user_friend` ON `friend`(`id_user`,`id_friend`);
+CREATE UNIQUE INDEX `user_friend` ON `friend`(`id_sender`,`id_recepient`);
 
 ALTER TABLE `playlist` ADD FOREIGN KEY (`id_user`) REFERENCES `user` (`id`);
 
