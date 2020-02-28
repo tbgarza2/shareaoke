@@ -31,7 +31,8 @@ class Main extends React.Component {
       .then(response => response.json())
       .then(data => this.setState({
         username: data.display_name,
-      })).then(() => {
+      }))
+      .then(() => {
         this.getUserInfo();
       });
 
@@ -48,11 +49,9 @@ class Main extends React.Component {
     return axios
       .get(`/api/user/${username}`)
       .then(userInfo => {
-        console.log(userInfo.data[0].id);
         this.setState({
           id_user: userInfo.data[0].id,
         });
-        // this.addPlaylist();
       })
       .catch(() => {
         this.createUser();
@@ -65,8 +64,9 @@ class Main extends React.Component {
     return axios
       .post(`/api/user/${username}`)
       .then(userInfo => {
-        console.log(userInfo.data);
-        this.getUserInfo();
+        this.setState({
+          id_user: userInfo.data,
+        });
       })
       .catch(err => {
         console.log(err);
