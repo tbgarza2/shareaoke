@@ -48,9 +48,9 @@ const findSong = (title) => {
 };
 
 // playlists
-const addPlaylist = (id_sender, name, description) => {
+const addPlaylist = (id_user, name, description) => {
   const mysqlQuery = 'INSERT INTO playlist VALUES(null, ?, ?, ?);';
-  return query(mysqlQuery, [id_sender, name, description]);
+  return query(mysqlQuery, [id_user, name, description]);
 };
 
 const deletePlaylist = (id) => {
