@@ -9,13 +9,13 @@ class SpotifyResults extends React.Component {
   }
 
   render() {
-    const { songData, addSong } = this.props;
+    const { songData, addSong, playlists } = this.props;
 
     return (
       <div>
         <ul>
           {songData.map(song => (
-            <SingleSpotifySong song={song} key={song.id} addSong={addSong} />
+            <SingleSpotifySong playlists={playlists} song={song} key={song.id} addSong={addSong} />
           ))}
         </ul>
       </div>
