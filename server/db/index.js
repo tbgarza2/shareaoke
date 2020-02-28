@@ -48,9 +48,9 @@ const findSong = (title) => {
 };
 
 // playlists
-const addPlaylist = (id_sender, name, description) => {
+const addPlaylist = (id_user, name, description) => {
   const mysqlQuery = 'INSERT INTO playlist VALUES(null, ?, ?, ?);';
-  return query(mysqlQuery, [id_sender, name, description]);
+  return query(mysqlQuery, [id_user, name, description]);
 };
 
 const deletePlaylist = (id) => {
@@ -72,13 +72,13 @@ const removeSongFromPlaylist = (id_playlist, id_song) => {
   return query(mysqlQuery, [id_playlist, id_song]);
 };
 
-const showUserPlaylist = (id_sender) => {
-  const mysqlQuery = 'SELECT * FROM playlist WHERE id_sender = ?;';
-  return query(mysqlQuery, [id_sender]);
+const showUserPlaylist = (id_user) => {
+  const mysqlQuery = 'SELECT * FROM playlist WHERE id_user = ?;';
+  return query(mysqlQuery, [id_user]);
 };
 
 const showPlaylistSongs = (id_playlist) => {
-  const mysqlQuery = 'SELECT * FROM playlist WHERE id_sender = ?;';
+  const mysqlQuery = 'SELECT * FROM playlist WHERE id_playlist = ?;';
   return query(mysqlQuery, [id_playlist]);
 };
 
