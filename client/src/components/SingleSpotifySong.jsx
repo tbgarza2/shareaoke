@@ -6,17 +6,19 @@ class SingleSpotifySong extends React.Component {
     this.state = {
     };
 
-    this.addSongToPlaylist = this.addSongToPlaylist.bind(this);
+    this.addSongToDatabase = this.addSongToDatabase.bind(this);
   }
 
-  addSongToPlaylist() {
+  addSongToDatabase() {
     const { song, addSong } = this.props;
+    const selectedPlaylist = document.getElementById('list').value;
 
     addSong({ song });
   }
 
   render() {
-    const { song } = this.props;
+    const { song, playlists } = this.props;
+
     return (
       <div>
         <div>
@@ -25,7 +27,12 @@ class SingleSpotifySong extends React.Component {
         <div>
           {song.album.name} - {song.name} by {song.album.artists[0].name}
         </div>
-        <button onClick={this.addSongToPlaylist}>Add song to playlist</button>
+        <button onClick={this.addSongToDatabase}>Add song to playlist</button>
+        <select id="list">
+          {playlists.map(playlist => (
+            <option value={playlist.name}>{playlist.name}</option>
+          ))}
+        </select>
       </div>
     );
   }
