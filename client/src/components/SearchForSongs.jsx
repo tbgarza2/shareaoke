@@ -11,16 +11,16 @@ class SearchForSongs extends React.Component {
       searchDisplay: false,
       token: '',
       playlists: [],
+      songId: 0,
     };
     this.handleSongNameChange = this.handleSongNameChange.bind(this);
     this.searchSpotifyForSong = this.searchSpotifyForSong.bind(this);
-    this.addSongToPlaylist = this.addSongToPlaylist.bind(this);
+    this.addSongToDatabase = this.addSongToDatabase.bind(this);
+    // this.addSongToPlaylist = this.addSongToPlaylist.bind(this);
   }
 
   componentDidMount() {
-    // find user id by username
-    // get all of that users playlists
-    // const { username } = this.props.location.state;
+    const { username } = this.props.location.state;
 
     // axios.get(`/api/user/${username}`)
     //   .then((data) => axios.get(`/api/playlist/${data.data[0].id}`)
@@ -63,25 +63,35 @@ class SearchForSongs extends React.Component {
       );
   }
 
-  addSongToPlaylist(song) {
+  addSongToDatabase(song) {
     const title = song.song.name;
     const album = song.song.album.name;
     const artist = song.song.album.artists[0].name;
-    const image = song.song.album.images[0].url;
+    const imageURL = song.song.album.images[0].url;
     const uri = song.song.uri;
 
-    return axios
-      .post('/api/song', { title, album, artist, image, uri })
-      .then(response => {
-        console.log('added song to database', response);
-      })
-      .catch(err => {
-        console.error(err);
-      });
+    // console.log(imageURL);
+    
+    // return axios
+    //   .post('/api/song', { title, album, artist, imageURL, uri })
+    //   .then(response => {
+    //     console.log('added song to database', response);
+    //   })
+    //   .catch(err => {
+    //     console.error(err);
+    //   });
+
+    // return axios
+    //   .post('/api/song', { title, album, artist, image, uri })
+    //   .then(axios.get(`/api/song/${title}`).then(data => this.setState({ songId: data.data[0].id })))
   }
 
+  // addSongToPlaylist() {
+
+  // }
+
   render() {
-    const { song, songData, searchDisplay } = this.state;
+    const { song, songData, searchDisplay, playlists } = this.state;
     return (
       <div>
         <div>
@@ -89,7 +99,7 @@ class SearchForSongs extends React.Component {
           <button onClick={this.searchSpotifyForSong} type="button">Search</button>
         </div>
         <div>
-          {searchDisplay ? <SpotifyResults songData={songData} addSong={this.addSongToPlaylist} /> : null}
+          {searchDisplay ? <SpotifyResults playlists={playlists} songData={songData} addSong={this.addSongToDatabase} /> : null}
         </div>
       </div>
     );
