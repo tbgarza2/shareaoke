@@ -6,7 +6,7 @@ import FriendsList from './FriendsList.jsx';
 import Playlists from './Playlists.jsx';
 import CreatePlaylist from './CreatePlaylist.jsx';
 import Playlist from './Playlist.jsx';
-import Player from './Player.jsx';
+import SearchForSongs from './SearchForSongs.jsx';
 
 
 class App extends React.Component {
@@ -34,6 +34,7 @@ class App extends React.Component {
           <Route exact path="/friends" render={(routerProps) => (<FriendsList {...routerProps} user={user} friends={friends} />)} />
           <Route exact path="/createplaylist" component={CreatePlaylist} />
           <Route exact path="/playlist" component={Playlist} />
+          <Route exact path="/search" component={SearchForSongs} />
         </Switch>
       </HashRouter>
     );
