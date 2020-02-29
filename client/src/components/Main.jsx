@@ -13,29 +13,29 @@ class Main extends React.Component {
     };
   }
 
-  // componentDidMount() {
-  //   const parsedToken = querystring.parse(window.location.hash);
-  //   const token = parsedToken['#/main/#access_token'];
+  componentDidMount() {
+    const parsedToken = querystring.parse(window.location.hash);
+    const token = parsedToken['#/main/#access_token'];
 
 
-  //   this.setState({
-  //     token,
-  //   });
+    this.setState({
+      token,
+    });
 
-  //   fetch('https://api.spotify.com/v1/me', {
-  //     method: 'GET',
-  //     headers: {
-  //       Authorization: `Bearer ${token}`,
-  //     },
-  //   })
-  //     .then(response => response.json())
-  //     .then(data => this.setState({
-  //       username: data.display_name,
-  //     }))
-  //     .then(() => {
-  //       this.getUserInfo();
-  //     });
-  // }
+    fetch('https://api.spotify.com/v1/me', {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then(response => response.json())
+      .then(data => this.setState({
+        username: data.display_name,
+      }))
+      .then(() => {
+        this.getUserInfo();
+      });
+  }
 
   getUserInfo() {
     const { username } = this.state;
@@ -68,16 +68,16 @@ class Main extends React.Component {
   }
 
   render() {
-    const { username, token } = this.state;
+    const { username, token, id_user } = this.state;
     return (
       <div>
         <h1>{username}</h1>
         <ul>
           <li>
-            <Link to={{ pathname: '/createplaylist', state: { username, token } }}>Create a playlist</Link>
+            <Link to={{ pathname: '/createplaylist', state: { username, token, id_user } }}>Create a playlist</Link>
           </li>
           <li>
-            <Link to="/playlists">Playlists</Link>
+            <Link to={{ pathname: '/playlists', state: { id_user } }}>Playlists</Link>
           </li>
           <li>
             <Link to="/friends">Friends</Link>
