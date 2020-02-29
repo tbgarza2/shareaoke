@@ -5,10 +5,18 @@ class Songs extends React.Component {
     super(props);
     this.state = {
     };
+
+    this.passUpUriAndPlaySong = this.passUpUriAndPlaySong.bind(this);
+  }
+
+  passUpUriAndPlaySong() {
+    const { display, song } = this.props;
+
+    display(song);
   }
 
   render() {
-    const { display, song } = this.props;
+    const { song } = this.props;
 
     return (
       <div>
@@ -16,7 +24,7 @@ class Songs extends React.Component {
           <div>
             <img src={song.imageURL} alt="" height="75" width="75" />
           </div>
-          <li onClick={display}>
+          <li onClick={this.passUpUriAndPlaySong}>
             {song.title}
             {song.album} - {song.title} by {song.artist}
           </li>
