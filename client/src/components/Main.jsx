@@ -13,35 +13,29 @@ class Main extends React.Component {
     };
   }
 
-  componentDidMount() {
-    const parsedToken = querystring.parse(window.location.hash);
-    const token = parsedToken['#/main/#access_token'];
+  // componentDidMount() {
+  //   const parsedToken = querystring.parse(window.location.hash);
+  //   const token = parsedToken['#/main/#access_token'];
 
 
-    this.setState({
-      token,
-    });
+  //   this.setState({
+  //     token,
+  //   });
 
-    fetch('https://api.spotify.com/v1/me', {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then(response => response.json())
-      .then(data => this.setState({
-        username: data.display_name,
-      }))
-      .then(() => {
-        this.getUserInfo();
-      });
-
-    // get username from users
-    // then set id in state
-    // in catch call create user to save a new user to db
-
-    // call to check if a user is in the db then continue
-  }
+  //   fetch('https://api.spotify.com/v1/me', {
+  //     method: 'GET',
+  //     headers: {
+  //       Authorization: `Bearer ${token}`,
+  //     },
+  //   })
+  //     .then(response => response.json())
+  //     .then(data => this.setState({
+  //       username: data.display_name,
+  //     }))
+  //     .then(() => {
+  //       this.getUserInfo();
+  //     });
+  // }
 
   getUserInfo() {
     const { username } = this.state;
