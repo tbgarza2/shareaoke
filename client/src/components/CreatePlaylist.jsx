@@ -1,15 +1,18 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 class CreatePlaylist extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      id_user: 1,
       playlistName: '',
       description: '',
     };
     this.handlePlaylistNameChange = this.handlePlaylistNameChange.bind(this);
     this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
+    this.addPlaylist = this.addPlaylist.bind(this);
   }
 
   handlePlaylistNameChange(e) {
@@ -22,6 +25,23 @@ class CreatePlaylist extends React.Component {
     this.setState({
       description: e.target.value,
     });
+  }
+
+  addPlaylist() {
+    console.log('click');
+    const { id_user, playlistName, description } = this.state;
+    console.log(id_user);
+    console.log(playlistName);
+    console.log(description);
+    return axios
+      .post('/api/playlist', { id_user, playlistName, description })
+      .then(response => {
+        // debugger;
+        console.log('added to database', response);
+      })
+      .catch(err => {
+        console.log(err);
+      });
   }
 
   render() {
@@ -38,13 +58,19 @@ class CreatePlaylist extends React.Component {
         <div>
           Enter a description:
           <textarea
-            style={{ width: 300 }} 
-            value={description} 
+            style={{ width: 300 }}
+            value={description}
             onChange={this.handleDescriptionChange}
           />
         </div>
-        <Link to={{ pathname: '/playlist', state: { playlistName, description, username, token } }}>
-          <button onClick={this.createPlaylist} type="button">Create Playlist</button>
+        <Link to={{
+          pathname: '/search',
+          state: {
+            playlistName, description, username, token,
+          },
+        }}
+        >
+          <button onClick={this.addPlaylist} type="button">Create Playlist</button>
         </Link>
       </div>
     );
