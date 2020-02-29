@@ -60,11 +60,7 @@ class Playlist extends React.Component {
         <p>{description}</p>
         {playlistSongs.map(song => <Songs key={song.id} song={song} display={this.displayClickedSong} />)}
         {playerDisplay ?
-<<<<<<< HEAD
           <iframe title="player" src="https://open.spotify.com/embed/album/1DFixLWuPkv3KT3TnV35m3" width="300" height="380" frameBorder="0" allowTransparency="true" allow="encrypted-media" />
-=======
-          <iframe src={`https://open.spotify.com/embed/track/${uri}`} width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
->>>>>>> 55ed952968c20e924962c88f8a1979dcad261bf5
           : null}
       </div>
     );
