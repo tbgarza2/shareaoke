@@ -8,6 +8,7 @@ import CreatePlaylist from './CreatePlaylist.jsx';
 import Playlist from './Playlist.jsx';
 import SearchForSongs from './SearchForSongs.jsx';
 import Navbar from './Navbar.jsx';
+import Player from './Player.jsx';
 
 
 class App extends React.Component {
@@ -37,6 +38,7 @@ class App extends React.Component {
           <Route exact path="/createplaylist" component={CreatePlaylist} />
           <Route exact path="/playlist" component={Playlist} />
           <Route exact path="/search" component={SearchForSongs} />
+          <Route exact path="/player" component={Player} />
         </Switch>
       </HashRouter>
     );
