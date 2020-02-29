@@ -33,8 +33,8 @@ const createUser = (username) => {
 
 const findUser = (username) => {
   const mysqlQuery = 'SELECT * FROM user WHERE username = ?;';
-  return query(mysqlQuery, [username])
-    .then(data => data[0]);
+  return query(mysqlQuery, [username]);
+    // .then(data => data[0]);
 };
 
 // songs
