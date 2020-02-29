@@ -6,7 +6,7 @@ class CreatePlaylist extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      id_user: 1,
+      id_user: this.props.location.state.id_user,
       playlistName: '',
       description: '',
     };
