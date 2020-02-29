@@ -58,7 +58,6 @@ class Main extends React.Component {
     return axios
       .post(`/api/user/${username}`)
       .then(userInfo => {
-        debugger;
         this.setState({
           id_user: userInfo.data,
         });
@@ -81,7 +80,7 @@ class Main extends React.Component {
             <Link to={{ pathname: '/playlists', state: { id_user } }}>Playlists</Link>
           </li>
           <li>
-            <Link to="/friends">Friends</Link>
+            <Link to={{ pathname: '/friend', state: { username, id_user } }}>Friends</Link>
           </li>
           <li>
             <Link to={{ pathname: '/search', state: { username } }}>Search for songs to add to a playlist</Link>
