@@ -7,17 +7,18 @@ class Songs extends React.Component {
     };
   }
 
-  // need to map over all of the songs on a different component later to make this dynamic
-  // Wherever we are pulling the songs from the database
-
   render() {
-    const { display } = this.props;
+    const { display, song } = this.props;
 
     return (
       <div>
         <ul>
+          <div>
+            <img src={song.imageURL} alt="" height="75" width="75" />
+          </div>
           <li onClick={display}>
-            Song 1
+            {song.title}
+            {song.album} - {song.title} by {song.artist}
           </li>
         </ul>
       </div>
