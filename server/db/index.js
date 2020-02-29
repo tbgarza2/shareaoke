@@ -78,7 +78,12 @@ const showUserPlaylist = (id_user) => {
 };
 
 const showPlaylistSongs = (id_playlist) => {
-  const mysqlQuery = 'SELECT * FROM playlist WHERE id_playlist = ?;';
+  const mysqlQuery = `
+    SELECT song.id, song.title, song.album, song.artist, song.imageURL, song.uri
+    FROM playlist_song
+    INNER JOIN song
+    ON song.id = playlist_song.id_song
+    WHERE playlist_song.id_playlist = ?;`;
   return query(mysqlQuery, [id_playlist]);
 };
 
