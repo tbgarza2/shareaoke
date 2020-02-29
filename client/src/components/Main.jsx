@@ -35,12 +35,6 @@ class Main extends React.Component {
       .then(() => {
         this.getUserInfo();
       });
-
-    // get username from users
-    // then set id in state
-    // in catch call create user to save a new user to db
-
-    // call to check if a user is in the db then continue
   }
 
   getUserInfo() {
@@ -64,6 +58,7 @@ class Main extends React.Component {
     return axios
       .post(`/api/user/${username}`)
       .then(userInfo => {
+        debugger;
         this.setState({
           id_user: userInfo.data,
         });
@@ -74,16 +69,16 @@ class Main extends React.Component {
   }
 
   render() {
-    const { username, token } = this.state;
+    const { username, token, id_user } = this.state;
     return (
       <div>
         <h1>{username}</h1>
         <ul>
           <li>
-            <Link to={{ pathname: '/createplaylist', state: { username, token } }}>Create a playlist</Link>
+            <Link to={{ pathname: '/createplaylist', state: { username, token, id_user } }}>Create a playlist</Link>
           </li>
           <li>
-            <Link to="/playlists">Playlists</Link>
+            <Link to={{ pathname: '/playlists', state: { id_user } }}>Playlists</Link>
           </li>
           <li>
             <Link to="/friends">Friends</Link>

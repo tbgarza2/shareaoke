@@ -34,6 +34,7 @@ const createUser = (username) => {
 const findUser = (username) => {
   const mysqlQuery = 'SELECT * FROM user WHERE username = ?;';
   return query(mysqlQuery, [username]);
+    // .then(data => data[0]);
 };
 
 // songs
@@ -106,41 +107,44 @@ const removeFriend = (id_sender, id_recepient) => {
 
 const showFriends = (id) => {
   const mysqlQuery = `
-    SELECT user.username
+    SELECT user.username, user.id
     FROM friend
     INNER JOIN user
     ON user.id = friend.id_recepient
     WHERE friend.id_sender = ?
     AND status = 1
     UNION
-    SELECT user.username
+    SELECT user.username, user.id
     FROM friend
     INNER JOIN user
     ON user.id = friend.id_sender
     WHERE friend.id_recepient = ?
-    AND status = 1;`;
+    AND status = 1
+    ORDER BY username;`;
   return query(mysqlQuery, [id, id]);
 };
 
 const showSentRequests = (id) => {
   const mysqlQuery = `
-    SELECT user.username
+    SELECT user.username, user.id
     FROM friend
     INNER JOIN user
     ON user.id = friend.id_recepient
     WHERE friend.id_sender = ?
-    AND status = 0`;
+    AND status = 0
+    ORDER BY username;`;
   return query(mysqlQuery, [id, id]);
 };
 
 const showReceivedRequests = (id) => {
   const mysqlQuery = `
-    SELECT user.username
+    SELECT user.username, user.id
     FROM friend
     INNER JOIN user
     ON user.id = friend.id_sender
     WHERE friend.id_recepient = ?
-    AND status = 0`;
+    AND status = 0
+    ORDER BY username;`;
   return query(mysqlQuery, [id, id]);
 };
 
