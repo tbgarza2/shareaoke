@@ -11,7 +11,8 @@ userRouter.post('/:name', (req, res) => {
     })
     .catch((err) => {
       console.log(err);
-      res.sendStatus(500);
+      res.send(err); // Change later
+      // res.sendStatus(500);
     });
 });
 
@@ -22,7 +23,8 @@ userRouter.get('/:name', (req, res) => {
     })
     .catch((err) => {
       console.log(err);
-      res.sendStatus(500);
+      res.send(err); // Change later
+      // res.sendStatus(500);
     });
 });
 
