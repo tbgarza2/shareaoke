@@ -10,6 +10,7 @@ class PlaylistSongs extends React.Component {
 
   render() {
     const { playlist } = this.props;
+
     return (
       <ul>
         <li>
@@ -19,7 +20,7 @@ class PlaylistSongs extends React.Component {
               playlist,
             },
           }}
-          > {playlist}
+          > {playlist.name}
           </Link>
         </li>
       </ul>
