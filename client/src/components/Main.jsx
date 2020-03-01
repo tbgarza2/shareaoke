@@ -62,6 +62,7 @@ class Main extends React.Component {
         this.setState({
           id_user: userInfo.data,
         });
+        console.log(id_user);
       })
       .catch(err => {
         console.log(err);
