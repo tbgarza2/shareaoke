@@ -2,7 +2,6 @@
 /* eslint-disable no-buffer-constructor */
 /* eslint-disable no-plusplus */
 /* eslint-disable import/no-unresolved */
-/* eslint-disable camelcase */
 /* eslint-disable func-names */
 
 /**

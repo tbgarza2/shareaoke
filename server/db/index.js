@@ -1,5 +1,3 @@
-/* eslint-disable camelcase */
-
 const mysql = require('mysql');
 const util = require('util');
 
