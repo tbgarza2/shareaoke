@@ -2,7 +2,6 @@
 /* eslint-disable no-buffer-constructor */
 /* eslint-disable no-plusplus */
 /* eslint-disable import/no-unresolved */
-/* eslint-disable camelcase */
 /* eslint-disable func-names */
 
 /**
@@ -109,7 +108,7 @@ spotifyRouter.get('/callback', (req, res) => {
         // use the access token to access the Spotify Web API
         request.get(options, (error, response, body) => {
           // get a users basic information
-          spotifyRouter.get('/main', (req, res) => {
+          spotifyRouter.get('/user', (req, res) => {
             res.send(body);
           });
         });

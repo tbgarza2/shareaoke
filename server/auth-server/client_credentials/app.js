@@ -1,6 +1,5 @@
 /* eslint-disable no-buffer-constructor */
 /* eslint-disable prefer-template */
-/* eslint-disable camelcase */
 /* eslint-disable no-shadow */
 /**
  * This is an example of a basic node.js script that performs
