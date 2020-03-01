@@ -46,6 +46,7 @@ class Main extends React.Component {
         this.setState({
           id_user: userInfo.data[0].id,
         });
+        console.log(id_user);
       })
       .catch(() => {
         this.createUser();
