@@ -12,6 +12,8 @@ class Playlist extends React.Component {
       description: '',
       playlistId: 0,
       playlistSongs: [],
+      uri: '',
+      clickedSong: {},
     };
     this.displayClickedSong = this.displayClickedSong.bind(this);
     this.getSongs = this.getSongs.bind(this);
@@ -38,16 +40,19 @@ class Playlist extends React.Component {
       }));
   }
 
-  displayClickedSong() {
+  displayClickedSong(song) {
     const { playerDisplay } = this.state;
+    const { uri } = song;
 
     this.setState({
-      playerDisplay: !playerDisplay,
+      playerDisplay: true,
+      uri: uri.replace('spotify:track:', ''),
+      clickedSong: song,
     });
   }
 
   render() {
-    const { currentPlaylist, description, playerDisplay, playlistSongs } = this.state;
+    const { currentPlaylist, description, playerDisplay, playlistSongs, uri } = this.state;
 
     return (
       <div>
@@ -55,7 +60,7 @@ class Playlist extends React.Component {
         <p>{description}</p>
         {playlistSongs.map(song => <Songs key={song.id} song={song} display={this.displayClickedSong} />)}
         {playerDisplay ?
-          <h1>Display clicked song</h1>
+          <iframe src={`https://open.spotify.com/embed/track/${uri}`} width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
           : null}
       </div>
     );
