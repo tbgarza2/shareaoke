@@ -100,7 +100,8 @@ const acceptFriendRequest = (id_sender, id_recipient) => {
 // Used for both declining and removing friends
 const removeFriend = (id_sender, id_recipient) => {
   const mysqlQuery = 'DELETE FROM friend WHERE id_sender = ? AND id_recipient = ?;';
-  return query(mysqlQuery, [id_sender, id_recipient]);
+  return query(mysqlQuery, [id_sender, id_recipient])
+    .then(() => query(mysqlQuery, [id_recipient, id_sender]));
 };
 
 const showFriends = (id) => {
@@ -163,7 +164,7 @@ const checkPendingRequests = (id_sender, id_recipient) => {
   SELECT * from friend WHERE id_sender = ? AND id_recipient = ?
   UNION
   SELECT * from friend WHERE id_recipient = ? AND id_sender = ?;`;
-  return query(mysqlQuery, [id_sender, id_recipient, id_recipient, id_sender]);
+  return query(mysqlQuery, [id_sender, id_recipient, id_sender, id_recipient]);
 };
 
 module.exports = {
