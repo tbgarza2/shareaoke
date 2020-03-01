@@ -1,6 +1,7 @@
 /* eslint-disable func-names */
 import React from 'react';
 import axios from 'axios';
+import Jumbotron from 'react-bootstrap/Jumbotron';
 import Songs from './Songs.jsx';
 
 class Playlist extends React.Component {
@@ -56,12 +57,20 @@ class Playlist extends React.Component {
 
     return (
       <div>
-        <h3>{currentPlaylist}</h3>
-        <p>{description}</p>
-        {playlistSongs.map(song => <Songs key={song.id} song={song} display={this.displayClickedSong} />)}
-        {playerDisplay ?
-          <iframe title="player" src="https://open.spotify.com/embed/album/1DFixLWuPkv3KT3TnV35m3" width="300" height="380" frameBorder="0" allowTransparency="true" allow="encrypted-media" />
-          : null}
+        <Jumbotron style={{ textAlign: 'center', background: 'orange' }}>
+          <h1 style={{ color: 'white' }}>{currentPlaylist}</h1>
+          <p style={{ color: 'white' }}>{description}</p>
+        </Jumbotron>
+        <div style={{ display: 'flex', flexDirection: 'row' }}>
+          <div style={{ display: 'flex', flexDirection: 'column' }}>
+            {playlistSongs.map(song => <Songs key={song.id} song={song} display={this.displayClickedSong} />)}
+          </div>
+          <div style={{ marginLeft: 200 }}>
+            {playerDisplay ?
+              <iframe src={`https://open.spotify.com/embed/track/${uri}`} width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+              : null}
+          </div>
+        </div>
       </div>
     );
   }
