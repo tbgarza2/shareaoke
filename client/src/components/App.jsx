@@ -1,6 +1,7 @@
 import React from 'react';
 import { HashRouter, Switch, Route } from 'react-router-dom';
 import axios from 'axios';
+import querystring from 'querystring';
 import Main from './Main.jsx';
 import SignUpLogin from './SignUpLogin.jsx';
 import Friends from './Friends.jsx';
@@ -22,26 +23,28 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    axios.get('/spotify/user')
-      .then(({ data }) => data.display_name)
-      .then((username) => {
-        this.setState({
-          username,
-        });
-      })
+    const parsedToken = querystring.parse(window.location.hash);
+    const token = parsedToken['#/main/#access_token'];
+
+
+    this.setState({
+      token,
+    });
+
+    fetch('https://api.spotify.com/v1/me', {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then(response => response.json())
+      .then(data => this.setState({
+        username: data.display_name,
+      }))
       .then(() => {
         this.getUserInfo();
-      })
-      .catch((err) => console.error(err));
+      });
 
-    axios.get('/spotify/token')
-      .then(({ data }) => data.access_token)
-      .then((token) => {
-        this.setState({
-          token,
-        });
-      })
-      .catch((err) => console.error(err));
   }
 
   getUserInfo() {
