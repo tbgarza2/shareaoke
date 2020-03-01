@@ -3,7 +3,7 @@
 const mysql = require('mysql');
 const util = require('util');
 
-const DB_HOST = 'localhost';
+const DB_HOST = 'team4ahalfstar:us-central1:team4ahalfstar'; // Added this as hostname
 const DB_USER = 'team4ahalfstar';
 const DB_PASS = 'team4ahalfstar';
 const DB_NAME = 'shareaoke';
