@@ -21,12 +21,13 @@ class SearchForSongs extends React.Component {
   }
 
   componentDidMount() {
-    const { username } = this.props.location.state;
-
-    axios.get(`/api/user/${username}`)
-      .then((data) => axios.get(`/api/playlist/${data.data[0].id}`)
-        .then(playlists => this.setState({ playlists: playlists.data })))
-      .catch(err => console.error(err));
+    setTimeout(() => {
+      const { username } = this.props;
+      axios.get(`/api/user/${username}`)
+        .then((data) => axios.get(`/api/playlist/${data.data[0].id}`)
+          .then(playlists => this.setState({ playlists: playlists.data })))
+        .catch(err => console.error(err));
+    }, 125);
   }
 
   handleSongNameChange(e) {
@@ -39,29 +40,22 @@ class SearchForSongs extends React.Component {
     const { song, searchDisplay } = this.state;
     const songQuery = encodeURIComponent(song);
 
-    axios.get('/spotify/token')
-      .then((data) => {
+    const { token } = this.props;
+    console.log(token);
+    fetch(`https://api.spotify.com/v1/search?q=${songQuery}&type=track&market=US&limit=10`, {
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      },
+    })
+      .then(response => response.json())
+      .then(data => {
         this.setState({
-          token: data.data.access_token,
+          songData: data.tracks.items,
+          searchDisplay: !searchDisplay,
         });
-      })
-      .then(
-        () => {
-          const { token } = this.state;
-          fetch(`https://api.spotify.com/v1/search?q=${songQuery}&type=track&market=US&limit=10`, {
-            headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json',
-              'Authorization': `Bearer ${token}`,
-            },
-          })
-            .then(response => response.json())
-            .then(data => this.setState({
-              songData: data.tracks.items,
-              searchDisplay: !searchDisplay,
-            }));
-        },
-      );
+      });
   }
 
   addSongToDatabase({ song }, selectedPlaylist) {
