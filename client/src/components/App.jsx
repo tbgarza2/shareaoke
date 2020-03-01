@@ -17,6 +17,7 @@ class App extends React.Component {
       id_user: 0,
       token: '',
       username: '',
+      playlists: [],
     };
   }
 
@@ -52,6 +53,12 @@ class App extends React.Component {
           id_user: data[0].id,
         });
       })
+      .then(() => {
+        const { id_user } = this.state;
+        axios.get(`/api/playlist/${id_user}`)
+          .then(playlists => this.setState({ playlists: playlists.data }))
+          .catch(err => console.error(err));
+      })
       .catch(() => {
         this.createUser();
       });
@@ -72,13 +79,19 @@ class App extends React.Component {
   }
 
   render() {
-    const { username, id_user, token } = this.state;
+    const {
+      username,
+      id_user,
+      token,
+      playlists,
+    } = this.state;
+
     return (
       <HashRouter>
         <Switch>
           <Route exact path="/" component={SignUpLogin} />
           <Route exact path="/main" render={(routerProps) => (<Main {...routerProps} username={username} id_user={id_user} token={token} />)} />
-          <Route exact path="/playlists" render={(routerProps) => (<Playlists {...routerProps} username={username} id_user={id_user} token={token} />)} />
+          <Route exact path="/playlists" render={(routerProps) => (<Playlists {...routerProps} username={username} id_user={id_user} token={token} playlists={playlists} />)} />
           <Route exact path="/friends" render={(routerProps) => (<Friends {...routerProps} username={username} id_user={id_user} token={token} />)} />
           <Route exact path="/createplaylist" render={(routerProps) => (<CreatePlaylist {...routerProps} username={username} id_user={id_user} token={token} />)} />
           <Route exact path="/playlist" render={(routerProps) => (<Playlist {...routerProps} username={username} id_user={id_user} token={token} />)} />
