@@ -58,7 +58,6 @@ class Main extends React.Component {
     return axios
       .post(`/api/user/${username}`)
       .then(userInfo => {
-        debugger;
         this.setState({
           id_user: userInfo.data,
         });
