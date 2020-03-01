@@ -22,11 +22,16 @@ class Playlists extends React.Component {
 
   render() {
     const { playlists } = this.state;
+    const { username } = this.props.location.state;
 
     return (
       <div>
-        <h3>Playlists</h3>
-        {playlists.map(playlist => <PlaylistSongs playlist={playlist} />)}
+        <div style={{ background: 'orange', marginLeft: 150, marginRight: 150, padding: 0, height: 65 }}>
+          <h3 style={{ fontSize: 50, color: 'white', marginLeft: 35 }}>{`${username}'s playlists`}</h3>
+        </div>
+        <div style={{ height: 600, background: '#ebeef2', marginLeft: 150, marginRight: 150, paddingTop: 20, display: 'flex', flexFlow: 'row wrap', justifyContent: 'center' }}>
+          {playlists.map(playlist => <PlaylistSongs playlist={playlist} />)}
+        </div>
       </div>
     );
   }
