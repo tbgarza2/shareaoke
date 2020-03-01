@@ -16,7 +16,7 @@ CREATE TABLE `user` (
 CREATE TABLE `friend` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
   `id_sender` int NOT NULL,
-  `id_recepient` int NOT NULL,
+  `id_recipient` int NOT NULL,
   `status` int
 );
 
@@ -44,9 +44,9 @@ CREATE TABLE `playlist_song` (
 
 ALTER TABLE `friend` ADD FOREIGN KEY (`id_sender`) REFERENCES `user` (`id`);
 
-ALTER TABLE `friend` ADD FOREIGN KEY (`id_recepient`) REFERENCES `user` (`id`);
+ALTER TABLE `friend` ADD FOREIGN KEY (`id_recipient`) REFERENCES `user` (`id`);
 
-CREATE UNIQUE INDEX `user_friend` ON `friend`(`id_sender`,`id_recepient`);
+CREATE UNIQUE INDEX `user_friend` ON `friend`(`id_sender`,`id_recipient`);
 
 ALTER TABLE `playlist` ADD FOREIGN KEY (`id_user`) REFERENCES `user` (`id`);
 
