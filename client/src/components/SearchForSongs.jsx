@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import Button from 'react-bootstrap/Button';
 import SpotifyResults from './SpotifyResults.jsx';
 
 class SearchForSongs extends React.Component {
@@ -92,12 +93,17 @@ class SearchForSongs extends React.Component {
     const { song, songData, searchDisplay, playlists } = this.state;
     return (
       <div>
-        <div>
-          Search for a song to add: <input value={song} onChange={this.handleSongNameChange} />
-          <button onClick={this.searchSpotifyForSong} type="button">Search</button>
+        <div style={{ background: 'orange', marginLeft: 150, marginRight: 150, padding: 0, height: 65 }}>
+          <h3 style={{ fontSize: 30, color: 'white', marginLeft: 35, textAlign: 'center' }}>Add songs to your playlists</h3>
         </div>
-        <div>
-          {searchDisplay ? <SpotifyResults playlists={playlists} songData={songData} addSong={this.addSongToDatabase} /> : null}
+        <div style={{ height: 600, background: '#ebeef2', marginLeft: 150, marginRight: 150, paddingTop: 20 }}>
+          <div>
+            Search for a song to add: <input style={{ border: '2px solid green', outline: 'none', marginRight: 5 }} value={song} onChange={this.handleSongNameChange} />
+            <Button variant="success" size="sm" onClick={this.searchSpotifyForSong} type="button">Search</Button>
+          </div>
+          <div>
+            {searchDisplay ? <SpotifyResults playlists={playlists} songData={songData} addSong={this.addSongToDatabase} /> : null}
+          </div>
         </div>
       </div>
     );
