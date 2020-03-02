@@ -6,6 +6,11 @@ const { spotifyRouter } = require('./auth-server/authorization_code/app');
 
 const app = express();
 
+// app.set('views', path.join(__dirname, 'views'));
+// app.engine('html', require('ejs').renderFile);
+
+// app.set('view engine', 'html');
+
 const PORT = 8080;
 const CLIENT_PATH = path.join(__dirname, '../client/dist');
 

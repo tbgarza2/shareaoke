@@ -3,6 +3,7 @@ import React from 'react';
 import axios from 'axios';
 import Jumbotron from 'react-bootstrap/Jumbotron';
 import Songs from './Songs.jsx';
+import Lyrics from './Lyrics.jsx';
 
 class Playlist extends React.Component {
   constructor(props) {
@@ -53,7 +54,9 @@ class Playlist extends React.Component {
   }
 
   render() {
-    const { currentPlaylist, description, playerDisplay, playlistSongs, uri } = this.state;
+    const {
+      currentPlaylist, description, playerDisplay, playlistSongs, uri, clickedSong,
+    } = this.state;
 
     return (
       <div>
@@ -66,8 +69,13 @@ class Playlist extends React.Component {
             {playlistSongs.map(song => <Songs key={song.id} song={song} display={this.displayClickedSong} />)}
           </div>
           <div style={{ marginLeft: 200 }}>
-            {playerDisplay ?
-              <iframe src={`https://open.spotify.com/embed/track/${uri}`} width="300" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+            {playerDisplay
+              ? (
+                <div>
+                  <iframe src={`https://open.spotify.com/embed/track/${uri}`} width="300" height="380" frameBorder="0" allowTransparency="true" allow="encrypted-media" />
+                  <Lyrics queryData={clickedSong} />
+                </div>
+              )
               : null}
           </div>
         </div>
