@@ -9,7 +9,6 @@ import Playlists from './Playlists.jsx';
 import CreatePlaylist from './CreatePlaylist.jsx';
 import Playlist from './Playlist.jsx';
 import SearchForSongs from './SearchForSongs.jsx';
-import Navbar from './Navbar.jsx';
 
 
 class App extends React.Component {
@@ -92,7 +91,6 @@ class App extends React.Component {
 
     return (
       <HashRouter>
-        <Navbar />
         <Switch>
           <Route exact path="/" component={SignUpLogin} />
           <Route exact path="/main" render={(routerProps) => (<Main {...routerProps} username={username} id_user={id_user} token={token} />)} />
