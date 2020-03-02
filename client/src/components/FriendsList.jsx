@@ -1,5 +1,6 @@
 /* eslint-disable max-len */
 import React from 'react';
+import Friend from './Friend.jsx';
 
 class FriendsList extends React.Component {
   setFriends(title, users, buttonMessage, buttonFunction, buttonMessage2, buttonFunction2, message) {
@@ -33,14 +34,16 @@ class FriendsList extends React.Component {
       sent,
       accept,
       remove,
+      playlists,
     } = this.props;
 
-    const friendsMessage = 'Nope. No friends here';
-    const receivedMessage = 'No received requests pending';
+    const receivedMessage = 'No received requests pending.';
     const sentMessage = 'No sent requests pending.';
     return (
       <div>
-        <div>{this.setFriends('Friends', friends, 'See Playlists', null, 'Remove Friend', remove, friendsMessage)}</div>
+        <h3>Friends</h3>
+        {!friends.length && <h5>Nope. No friends here.</h5>}
+        <div>{friends.map(friend => (<Friend key={friend.id} friend={friend} remove={remove} playlists={playlists} />))}</div>
         <div>{this.setFriends('Received', received, 'Accept', accept, 'Decline', remove, receivedMessage)}</div>
         <div>{this.setFriends('Sent', sent, 'Cancel', remove, null, null, sentMessage)}</div>
       </div>
