@@ -29,7 +29,7 @@ class Playlists extends React.Component {
         <div style={{ background: 'orange', marginLeft: 150, marginRight: 150, padding: 0, height: 65 }}>
           <h3 style={{ fontSize: 50, color: 'white', marginLeft: 35 }}>{`${username}'s playlists`}</h3>
         </div>
-        <div style={{ height: 600, background: '#ebeef2', marginLeft: 150, marginRight: 150, paddingTop: 20, display: 'flex', flexFlow: 'row wrap', justifyContent: 'center' }}>
+        <div style={{ height: 1200, background: '#ebeef2', marginLeft: 150, marginRight: 150, paddingTop: 20, display: 'flex', flexFlow: 'row wrap', justifyContent: 'center' }}>
           {playlists.map(playlist => <PlaylistSongs playlist={playlist} />)}
         </div>
       </div>

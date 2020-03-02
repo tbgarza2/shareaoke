@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import Button from 'react-bootstrap/Button';
 
 class CreatePlaylist extends React.Component {
   constructor(props) {
@@ -44,28 +45,39 @@ class CreatePlaylist extends React.Component {
     const { username, token } = this.props;
     return (
       <div>
-        <h1>Create a new playlist</h1>
-        <p>Start making a new playlist for your next Shareaoke party</p>
-        <div>
-          Playlist Name: <input value={playlistName} onChange={this.handlePlaylistNameChange} />
+        <div style={{ background: 'orange', marginLeft: 150, marginRight: 150, padding: 0, height: 65 }}>
+          <h1 style={{ fontSize: 30, color: 'white', marginLeft: 40, textAlign: 'center' }}>Create a new playlist</h1>
         </div>
-        <div>
-          Enter a description:
-          <textarea
-            style={{ width: 300 }}
-            value={description}
-            onChange={this.handleDescriptionChange}
-          />
+        <div style={{ height: 1200, background: '#ebeef2', marginLeft: 150, marginRight: 150, paddingTop: 20 }}>
+          <div>
+            <div>
+              <h5 style={{ marginLeft: 100, color: '#00692d' }}>Enter a playlist name</h5>
+              <div style={{ marginLeft: 100, marginBottom: 10 }}>
+                <input style={{ border: '2px solid green', outline: 'none' }} placeholder="name" value={playlistName} onChange={this.handlePlaylistNameChange} />
+              </div>
+            </div>
+            <div>
+              <h5 style={{ marginLeft: 100, color: '#00692d' }}>Enter a playlist description</h5>
+              <div style={{ marginLeft: 100, marginBottom: 10 }}>
+                <textarea
+                  placeholder="description"
+                  style={{ width: 300, border: '2px solid green', outline: 'none' }}
+                  value={description}
+                  onChange={this.handleDescriptionChange}
+                />
+              </div>
+            </div>
+            <Link to={{
+              pathname: '/search',
+              state: {
+                playlistName, description, username, token,
+              },
+            }}
+            >
+              <Button style={{ marginLeft: 100 }} variant="success" onClick={this.addPlaylist} type="button">Create Playlist</Button>
+            </Link>
+          </div>
         </div>
-        <Link to={{
-          pathname: '/search',
-          state: {
-            playlistName, description, username, token,
-          },
-        }}
-        >
-          <button onClick={this.addPlaylist} type="button">Create Playlist</button>
-        </Link>
       </div>
     );
   }
