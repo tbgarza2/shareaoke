@@ -1,12 +1,12 @@
 const mysql = require('mysql');
 const util = require('util');
 
-const DB_HOST = 'localhost'; // Added this as hostname
+const DB_HOST = 'localhost:3066'; // Added this as hostname
 const DB_USER = 'root';
 const DB_PASS = 'team4ahalfstar';
 const DB_NAME = 'shareaoke';
 
-const connection = mysql.createConnection({
+const connection = mysql.createPool({
   host: process.env.DB_HOST || DB_HOST,
   user: process.env.DB_USER || DB_USER,
   password: process.env.DB_PASS || DB_PASS,
@@ -15,7 +15,7 @@ const connection = mysql.createConnection({
 
 const query = util.promisify(connection.query).bind(connection);
 
-connection.connect(err => {
+connection.getConnection(err => {
   if (err) {
     console.log(err);
   } else {
