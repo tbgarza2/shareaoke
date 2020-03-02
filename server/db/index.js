@@ -6,10 +6,10 @@ const DB_USER = 'root';
 const DB_PASS = 'team4ahalfstar';
 const DB_NAME = 'shareaoke';
 
-const connection = mysql.createConnection({
-  host: DB_HOST,
-  user: DB_USER,
-  password: DB_PASS,
+const connection = mysql.createPool({
+  host: process.env.DB_HOST || DB_HOST,
+  user: process.env.DB_USER || DB_USER,
+  password: process.env.DB_PASS || DB_PASS,
   database: DB_NAME,
 });
 
