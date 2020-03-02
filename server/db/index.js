@@ -1,7 +1,7 @@
 const mysql = require('mysql');
 const util = require('util');
 
-const DB_HOST = 'localhost'; // Added this as hostname
+const DB_HOST = '%'; // Added this as hostname
 const DB_USER = 'root';
 const DB_PASS = 'team4ahalfstar';
 const DB_NAME = 'shareaoke';
