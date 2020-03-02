@@ -2,6 +2,7 @@
 /* eslint-disable no-alert */
 import React from 'react';
 import axios from 'axios';
+import Button from 'react-bootstrap/Button';
 import FriendsList from './FriendsList.jsx';
 
 class Friend extends React.Component {
@@ -119,19 +120,29 @@ class Friend extends React.Component {
       sentFriendRequests,
     } = this.state;
 
+    const { username } = this.props.location.state;
+
     return (
       <div>
-        <div>
-          <input onChange={this.handleInput} />
-          <button onClick={this.handleClick}>Add Friend</button>
+        <div style={{ background: 'orange', marginLeft: 150, marginRight: 150, padding: 0, height: 65 }}>
+          <h1 style={{ fontSize: 45, color: 'white', marginLeft: 40, textAlign: 'center' }}>Friends</h1>
         </div>
-        <FriendsList
-          friends={allFriends}
-          received={receivedFriendRequests}
-          sent={sentFriendRequests}
-          accept={this.acceptFriendRequest}
-          remove={this.removeFriend}
-        />
+        <div style={{ height: 1200, background: '#ebeef2', marginLeft: 150, marginRight: 150, paddingTop: 20 }}>
+          <div style={{ marginLeft: 15 }}>
+            <div>
+              <input onChange={this.handleInput} />
+              <Button size="sm" onClick={this.handleClick}>Add Friend</Button>
+            </div>
+            <FriendsList
+              username={username}
+              friends={allFriends}
+              received={receivedFriendRequests}
+              sent={sentFriendRequests}
+              accept={this.acceptFriendRequest}
+              remove={this.removeFriend}
+            />
+          </div>
+        </div>
       </div>
     );
   }
